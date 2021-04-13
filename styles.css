@@ -3,11 +3,22 @@
   margin: 0;
   padding: 0;
   font-family: "Courier New", Courier, monospace;
+  /* 
+
+    // 
+    baby orange #ffb766
+    bEAUTIFUl dark orange f47d42 
+    Noice dark blue #022449
+    banner gray blue #65a8b8
+    light blue gray #c7d9dd;
+
+
+  */
 }
 
 .navbar {
-  background: #131313;
-  height: 80px;
+  background: #65a8b8;
+  height: 110px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,8 +40,7 @@
 }
 
 #navbar__logo {
-  background-color: #ff8177;
-  background-image: linear-gradient(to top, #ff0844 0%, #ffb199 100%);
+  background-color: #c7d9dd;
   background-size: 100%;
   -webkit-background-clip: text;
   -moz-background-clip: text;
@@ -59,7 +69,7 @@
 }
 
 .navbar__links {
-  color: #fff;
+  color: #c7d9dd;
   display: flex;
   align-items: center;
   jusutify-content: center;
@@ -86,18 +96,18 @@
   width: 100%;
   border: none;
   outline: none;
-  border-radius: 4px;
-  background: #f77062;
-  color: #fff;
+  border-radius: none;
+  background: 5690c0;
+  color: #c7d9dd;
 }
 
 .button:hover {
-  background: #4837ff;
+  color: #ffb766;
   transition: all 0.3s ease;
 }
 
 .navbar__links:hover {
-  color: #f77062;
+  color: #ffb766;
   transition: all 0.3s ease;
 }
 /* It is triggered when the width is 960px
@@ -126,7 +136,7 @@
     transition: all 0.5s ease;
     height: 5-vh;
     z-index: -1;
-    background: #131313;
+    background: #65a8b8;
   }
 
   /* when the ham bar is pressed*/
@@ -149,7 +159,7 @@
     height: 3px;
     margin: 5px auto;
     transition: all 0.3s ease-in-out;
-    background: #fff;
+    background: #c7d9dd;
   }
 
   .navbar__item {
@@ -214,7 +224,7 @@
   justify-self: center;
   margin: 0 auto;
   /* size of the box thing */
-  height: 100vh;
+  height: 90vh;
   background-color: #141414;
   z-index: 1;
   width: 100%;
@@ -223,10 +233,10 @@
 }
 
 .main__content h1 {
+  /* make sure not to include space before rem. */
   font-size: 4rem;
-  font-style: #fff;
   background-color: #ff8177;
-  background-image: linear-gradient(to top, #ff0844 0%, #ffb199 100%);
+  background-image: linear-gradient(to top, #ff0844 0%, #ffb1ff 100%);
   background-size: 100%;
   -webkit-background-clip: text;
   -moz-background-clip: text;
@@ -235,7 +245,123 @@
 }
 
 .main__content h2 {
-  font-size: 3rem;
-  font-style: #000;
-  background-color: #ffb199;
+  font-size: 4rem;
+  background-color: #ff8177;
+  background-image: linear-gradient(to top, #b721ff 0%, #21d4fd 100%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+
+.main__content p {
+  margin-top: 1rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+  /* use google fonts kumbh */
+}
+
+.main__btn {
+  font-size: 1rem;
+  background-image: linear-gradient(to top, #f77062, #fe5196 100%);
+  padding: 14px 32px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  position: relative;
+  /* for that transition baby  */
+  transition: all 0.35s;
+  outline: none;
+}
+
+.main__btn a {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  text-decoration: none;
+}
+
+.main__btn:after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: #4837ff;
+  transition: all 0.35s;
+  border-radius: 4px;
+}
+
+.main__btn:hover {
+  color: #fff;
+}
+
+.main__btn:hover:after {
+  width: 100%;
+}
+
+.main__img--container {
+  text-align: center;
+}
+
+#main__img {
+  height: 80%;
+  width: 80%;
+}
+
+/* Mobile Responsive */
+@media screen and (max-width: 768px) {
+  .main__container {
+    display: grid;
+    grid-template-columns: auto;
+    align-items: center;
+    justify-self: center;
+    width: 100%;
+    margin: 0 auto;
+    height: 90 vh;
+  }
+
+  .main__content {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .main__content h1 {
+    font-size: 2.5rem;
+    margin-top: 2rem;
+  }
+
+  .main__content h2 {
+    font-size: 3rem;
+  }
+
+  .main__content p {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .main__content h1 {
+    font-size: 2rem;
+    margin-top: 3rem;
+  }
+
+  .main__content h2 {
+    font-size: 2rem;
+  }
+
+  .main__content p {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+  }
+
+  .main__btn {
+    padding: 12px 36px;
+    margin: 2.5rem 0;
+  }
 }

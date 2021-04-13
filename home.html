@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NEXT website</title>
+    <title>CIS Counselling Website</title>
     <link rel="stylesheet" href="styles.css" />
     <!-- font awesome needs to be in the head tag. insert the cnd link here-->
     <link
@@ -13,13 +13,18 @@
       integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk"
       crossorigin="anonymous"
     />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <!--Navbar Section-->
     <nav class="navbar">
       <div class="navbar__container">
         <!-- insert the <i> for logo. get it from the font thing -->
-        <a href="/" id="navbar__logo"> <i class="fas fa-fish"></i> NEXT </a>
+        <a href="/" id="navbar__logo"> CIS Counselling Website </a>
         <div class="navbar__toggle" id="mobile-menu">
           <span class="bar"></span>
           <span class="bar"></span>
@@ -27,16 +32,16 @@
         </div>
         <ul class="navbar__menu">
           <li class="navbar__item">
-            <a href="/" class="navbar__links"> Home </a>
+            <a href="/home.html" class="navbar__links"> Home </a>
           </li>
           <li class="navbar__item">
-            <a href="/tech.html" class="navbar__links"> Tech </a>
+            <a href="/upload.html" class="navbar__links"> Upload </a>
           </li>
           <li class="navbar__item">
-            <a href="/" class="navbar__links"> Products </a>
+            <a href="/profile.html" class="navbar__links"> Profile </a>
           </li>
           <li class="navbar__btn">
-            <a href="/" class="button"> Sign up </a>
+            <a href="/" class="button"> Sign In </a>
           </li>
         </ul>
       </div>
@@ -46,7 +51,7 @@
     <!-- use .main or .main__container to create the div classes.-->
     <div class="main">
       <div class="main__container">
-        <div class="main--content">
+        <div class="main__content">
           <h1>NEXT GENERATION</h1>
           <h2>TECHNOLOGY</h2>
           <p>boop website</p>
@@ -64,6 +69,8 @@
           <img src="images/pic1.svg " alt="pic" id="main__img" />
         </div>
       </div>
+    </div>
+
     </div>
     <script src="app.js"></script>
   </body>
