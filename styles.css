@@ -6,41 +6,47 @@
   /* 
 
     // 
-    baby orange #ffb766
-    bEAUTIFUl dark orange f47d42 
-    Noice dark blue #022449
-    banner gray blue #65a8b8
-    light blue gray #c7d9dd;
-
+    light green : #9fa685
+    light yellow : #fae9a3
+    light orangey brown: #f08d63
+    light pink : #ff8176
+    dark purple :  #67466a
+    dark gray blue (logo): #395373
+    light gray : #888684
+    drop down : #d5d0b5
+#68607d
 
   */
 }
 
 .navbar {
-  background: #65a8b8;
-  height: 110px;
+  background-image: url(images/mountain.jpg);
+  height: 250px;
+  background-position: center;
+  background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1.2rem;
-  position: sticky;
+  position: relative;
   top: 0;
-  z-index: 999;
+  z-index: 99;
 }
 
 .navbar__container {
   display: flex;
   justify-content: space-between;
-  height: 80px;
+  height: 50%;
   z-index: 1;
   width: 100%;
   max-width: 1300px;
   margin: 0 auto;
   padding: 0 50px;
+  position: sticky;
 }
 
 #navbar__logo {
-  background-color: #c7d9dd;
+  background-color: #395373;
   background-size: 100%;
   -webkit-background-clip: text;
   -moz-background-clip: text;
@@ -51,6 +57,7 @@
   cursor: pointer;
   text-decoration: none;
   font-size: 2rem;
+  font-weight: bold;
 }
 
 .fa-gem {
@@ -69,10 +76,10 @@
 }
 
 .navbar__links {
-  color: #c7d9dd;
+  color: #fff;
   display: flex;
   align-items: center;
-  jusutify-content: center;
+  justify-content: center;
   text-decoration: none;
   padding: 0 1rem;
   height: 100%;
@@ -98,18 +105,19 @@
   outline: none;
   border-radius: none;
   background: 5690c0;
-  color: #c7d9dd;
+  color: #fff;
 }
 
 .button:hover {
-  color: #ffb766;
+  color: #395373;
   transition: all 0.3s ease;
 }
 
 .navbar__links:hover {
-  color: #ffb766;
+  color: #395373;
   transition: all 0.3s ease;
 }
+
 /* It is triggered when the width is 960px
 */
 
@@ -136,22 +144,22 @@
     transition: all 0.5s ease;
     height: 5-vh;
     z-index: -1;
-    background: #65a8b8;
+    background: #d5d0b5;
   }
 
   /* when the ham bar is pressed*/
   .navbar__menu.active {
     /* show the entire menu */
-    top: 100%;
+    top: 160px;
     opacity: 1;
     transition: all 0.5s ease;
     z-index: 99;
-    height: 50vh;
+    height: 48vh;
     font-size: 1.6rem;
   }
 
   #navbar__logo {
-    padding-left: 25px;
+    padding: 25px;
   }
 
   .navbar__toggle .bar {
@@ -159,7 +167,7 @@
     height: 3px;
     margin: 5px auto;
     transition: all 0.3s ease-in-out;
-    background: #c7d9dd;
+    background: #fff;
   }
 
   .navbar__item {
@@ -211,9 +219,10 @@
     transform: translateY(-8px) rotate(-45deg);
   }
 }
+
 /* Home section */
 .home {
-  background: #c7d9dd;
+  background: #d5d0b5;
   height: 150px;
   display: flex;
   justify-content: center;
@@ -221,12 +230,12 @@
   font-size: 1.2rem;
   position: relative;
   top: 0;
-  z-index: 998;
+  z-index: 1;
 }
 .home__search {
   display: flex;
-  position: sticky;
-  top: 40%;
+  position: relative;
+  top: 20px;
   left: auto;
   transform: translate(0, -50%);
   background: rgba(0, 0, 0, 0.2);
@@ -244,6 +253,19 @@
 }
 
 .search__btn {
+  background: #fff;
+  width: 10%;
+  border-radius: 5px;
+  position: relative;
+  cursor: pointer;
+}
+
+.search__btn .fas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
 }
 
 /* Hero Section CSS */
