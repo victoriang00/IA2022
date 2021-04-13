@@ -211,6 +211,40 @@
     transform: translateY(-8px) rotate(-45deg);
   }
 }
+/* Home section */
+.home {
+  background: #c7d9dd;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  position: relative;
+  top: 0;
+  z-index: 998;
+}
+.home__search {
+  display: flex;
+  position: sticky;
+  top: 40%;
+  left: auto;
+  transform: translate(0, -50%);
+  background: rgba(0, 0, 0, 0.2);
+  max-width: 550px;
+  width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  justify-content: space-between;
+}
+
+.home__search .input {
+  width: 85%;
+  padding: 10px 20px;
+  border: none;
+}
+
+.search__btn {
+}
 
 /* Hero Section CSS */
 .main {
