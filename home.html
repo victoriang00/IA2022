@@ -18,6 +18,14 @@
       href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- GOogle shit for the sign in -->
+    <meta name="google-signin-scope" content="profile email" />
+    <meta
+      name="google-signin-client_id"
+      content="YOUR_CLIENT_ID.apps.googleusercontent.com"
+    />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
   </head>
   <body>
     <!--Navbar Section-->
@@ -49,38 +57,66 @@
 
     <!-- Home Section -->
     <div class="home">
-        <div class="home__search">
-          <input type="text" class="input" placeholder="Search">
-          <div class="search__btn">
-            <i class="fas fa-search"></i>
-          </div>
-      </div>
-    </div>
-    <!--Hero Section-->
-    <!-- use .main or .main__container to create the div classes.-->
-    <div class="main">
-      <div class="main__container">
-        <div class="main__content">
-          <h1>NEXT GENERATION</h1>
-          <h2>TECHNOLOGY</h2>
-          <p>boop website</p>
-          <!-- if u want to make something specific put it before the dot. 
-                e.g button.main__btn -->
-          <button class="main__btn">
-            <!-- a tags are for links the href is the website to go to-->
-            <a href="/">Get started</a>
-          </button>
-        </div>
-        <div class="main__img--container">
-          <!-- use img#main__img shortcut
-            src goes to the folder.-->>
-          <!-- use the undraw thing to find the pictures. -->
-          <img src="images/clouds.jpg " alt="pic" id="main__img" />
+      <div class="home__search">
+        <input type="text" class="input" placeholder="Search" />
+        <div class="search__btn">
+          <i class="fas fa-search"></i>
         </div>
       </div>
     </div>
 
+    <!--Main Section-->
+    <!-- use .main or .main__container to create the div classes.-->
+
+    <div class="main">
+      <div class="main__container">
+        <!-- 
+                  <div class="main__content">
+          <h1>BIG words</h1>
+          <h2>Smoller words</h2>
+          <p>boop website</p>
+          //if u want to make something specific put it before the dot. 
+                e.g button.main__btn //
+                <button class="main__btn">
+                   // a tags are for links the href is the website to go to // 
+                  <a href="/">Get started</a>
+                </button>
+              </div>
+         -->
+        <div class="main__img--container">
+          <!-- use img#main__img shortcut
+            src goes to the folder.-->
+          <!-- use the undraw thing to find the pictures. -->
+          <img src="images/clouds.jpg " alt="pic" id="main__img" />
+        </div>
+        <div class="main__img--container">
+          <img src="images/mountain.jpg " alt="pic" id="main__img" />
+        </div>
+        <div class="main__img--container">
+          <img src="images/orange.jpg " alt="pic" id="main__img" />
+        </div>
+      </div>
     </div>
+
     <script src="app.js"></script>
+
+    <!-- Google SIGN in stuff -->
+    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    <script>
+      function onSignIn(googleUser) {
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+        console.log("Full Name: " + profile.getName());
+        console.log("Given Name: " + profile.getGivenName());
+        console.log("Family Name: " + profile.getFamilyName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());
+
+        // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);
+      }
+    </script>
   </body>
 </html>

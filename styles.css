@@ -4,8 +4,7 @@
   padding: 0;
   font-family: "Courier New", Courier, monospace;
   /* 
-
-    // 
+    Colors and shit 
     light green : #9fa685
     light yellow : #fae9a3
     light orangey brown: #f08d63
@@ -14,11 +13,10 @@
     dark gray blue (logo): #395373
     light gray : #888684
     drop down : #d5d0b5
-#68607d
-
+     light dark purple :#68607d 
   */
 }
-
+/* Navbar  */
 .navbar {
   background-image: url(images/mountain.jpg);
   height: 250px;
@@ -42,16 +40,14 @@
   max-width: 1300px;
   margin: 0 auto;
   padding: 0 50px;
-  position: sticky;
+  position: rel;
 }
 
 #navbar__logo {
   background-color: #395373;
   background-size: 100%;
   -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
+
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -222,7 +218,7 @@
 
 /* Home section */
 .home {
-  background: #d5d0b5;
+  background: #fff;
   height: 150px;
   display: flex;
   justify-content: center;
@@ -270,7 +266,7 @@
 
 /* Hero Section CSS */
 .main {
-  background-color: #141414;
+  background-color: #fff;
 }
 
 .main__container {
@@ -281,7 +277,7 @@
   margin: 0 auto;
   /* size of the box thing */
   height: 90vh;
-  background-color: #141414;
+  background-color: #fff;
   z-index: 1;
   width: 100%;
   max-width: 1300px;
@@ -362,9 +358,15 @@
 
 .main__img--container {
   text-align: center;
+  background-color: #4837ff;
+  width: 300px;
+  height: 200px;
+  padding: 15px 15px;
 }
 
 #main__img {
+  position: center;
+
   height: 80%;
   width: 80%;
 }
@@ -419,5 +421,11 @@
   .main__btn {
     padding: 12px 36px;
     margin: 2.5rem 0;
+  }
+
+  /* GOOGLE SIGN IN */
+  .g-signin2 {
+    margin-bottom: 10px;
+    margin-right: 10px;
   }
 }
