@@ -11,7 +11,7 @@
     light pink : #ff8176
     dark purple :  #67466a
     dark gray blue (logo): #395373
-    light gray : #888684
+    light gray : #cecece
     drop down : #d5d0b5
      light dark purple :#68607d 
   */
@@ -234,7 +234,7 @@
   top: 20px;
   left: auto;
   transform: translate(0, -50%);
-  background: rgba(0, 0, 0, 0.2);
+  background-color: #cecece;
   max-width: 550px;
   width: 100%;
   padding: 15px;
@@ -270,162 +270,78 @@
 }
 
 .main__container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  justify-self: center;
   margin: 0 auto;
-  /* size of the box thing */
-  height: 90vh;
+  height: auto;
   background-color: #fff;
   z-index: 1;
   width: 100%;
   max-width: 1300px;
-  padding: 0 50px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
 }
 
-.main__content h1 {
-  /* make sure not to include space before rem. */
-  font-size: 4rem;
-  background-color: #ff8177;
-  background-image: linear-gradient(to top, #ff0844 0%, #ffb1ff 100%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-}
-
-.main__content h2 {
-  font-size: 4rem;
-  background-color: #ff8177;
-  background-image: linear-gradient(to top, #b721ff 0%, #21d4fd 100%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-}
-
-.main__content p {
-  margin-top: 1rem;
-  font-size: 2rem;
-  font-weight: 700;
-  color: white;
-  /* use google fonts kumbh */
-}
-
-.main__btn {
-  font-size: 1rem;
-  background-image: linear-gradient(to top, #f77062, #fe5196 100%);
-  padding: 14px 32px;
-  border: none;
-  border-radius: 4px;
-  color: #fff;
-  cursor: pointer;
-  position: relative;
-  /* for that transition baby  */
-  transition: all 0.35s;
-  outline: none;
-}
-
-.main__btn a {
-  position: relative;
-  z-index: 2;
-  color: #fff;
-  text-decoration: none;
-}
-
-.main__btn:after {
-  position: absolute;
-  content: "";
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 100%;
-  background: #4837ff;
-  transition: all 0.35s;
-  border-radius: 4px;
-}
-
-.main__btn:hover {
-  color: #fff;
-}
-
-.main__btn:hover:after {
-  width: 100%;
-}
-
-.main__img--container {
-  text-align: center;
-  background-color: #4837ff;
+.main__container > div {
+  background-color: #cecece;
   width: 300px;
+  height: 325px;
+  border-radius: 8px;
+  margin: auto;
+}
+
+.main__container > div > p {
+  text-align: justify;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* number of lines to show */
+  -webkit-box-orient: vertical;
+  margin: 0px 10px;
+}
+
+.main__img__container {
+  background-image: url(images/fakeDoc.jpg);
+  background-position: top;
+  background-size: cover;
+  display: flex;
+  margin: 10px auto;
+  border-radius: 8px;
+  width: 275px;
   height: 200px;
-  padding: 15px 15px;
 }
 
-#main__img {
-  position: center;
-
-  height: 80%;
-  width: 80%;
+.res__link {
+  text-align: justify;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* number of lines to show */
+  -webkit-box-orient: vertical;
+  margin: 5px;
 }
 
-/* Mobile Responsive */
-@media screen and (max-width: 768px) {
+/* Scaling */
+@media screen and (max-width: 1300px) {
   .main__container {
-    display: grid;
-    grid-template-columns: auto;
-    align-items: center;
-    justify-self: center;
-    width: 100%;
-    margin: 0 auto;
-    height: 90 vh;
-  }
-
-  .main__content {
-    text-align: center;
-    margin-bottom: 4rem;
-  }
-
-  .main__content h1 {
-    font-size: 2.5rem;
-    margin-top: 2rem;
-  }
-
-  .main__content h2 {
-    font-size: 3rem;
-  }
-
-  .main__content p {
-    margin-top: 1rem;
-    font-size: 1.5rem;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media screen and (max-width: 480px) {
-  .main__content h1 {
-    font-size: 2rem;
-    margin-top: 3rem;
+@media screen and (max-width: 950px) {
+  .main__container {
+    grid-template-columns: repeat(2, 1fr);
   }
+}
 
-  .main__content h2 {
-    font-size: 2rem;
+@media screen and (max-width: 650px) {
+  .main__container {
+    grid-template-columns: repeat(1, 1fr);
   }
+}
 
-  .main__content p {
-    margin-top: 2rem;
-    font-size: 1.5rem;
-  }
-
-  .main__btn {
-    padding: 12px 36px;
-    margin: 2.5rem 0;
-  }
-
-  /* GOOGLE SIGN IN */
-  .g-signin2 {
-    margin-bottom: 10px;
-    margin-right: 10px;
-  }
+/* GOOGLE SIGN IN */
+.g-signin2 {
+  margin-bottom: 10px;
+  margin-right: 10px;
 }
