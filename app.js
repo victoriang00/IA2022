@@ -28,3 +28,22 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
+
+firebase.auth.Auth.Persistence.LOCAL;
+
+$("#sign__in").click(function () {
+  var email = $("email__input").val();
+  var pass = $("pass__input").val();
+
+  if (email != "" && pass != "") {
+    var result = firebase.auth().signInWithEmailAndPassword(email, pass);
+    result.catch(function (error) {
+      var errorCode = error.code;
+      var errorMsg = error.message;
+
+      alert("Error signing in " + errorMsg);
+    });
+  } else {
+    alert("Please fill in all fields");
+  }
+});
