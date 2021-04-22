@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign in</title>
     <link rel="stylesheet" href="signin.css" />
+    <script type="text/javascript" src="app.js"></script>
 
     <!-- Firebase auth -->
     <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
@@ -42,32 +43,29 @@
       <div class="main__sign">
         <div class="email__sign">
           <input
-            type="text"
+            type="email"
             class="input"
-            placeholder="email"
+            placeholder="Enter email"
             id="email__input"
           />
           <i class="far fa-envelope"></i>
         </div>
         <div class="pass__sign">
           <input
-            type="text"
+            type="password"
             class="input"
-            placeholder="password"
+            placeholder="Enter Password"
             id="pass__input"
           />
           <i class="fas fa-key"></i>
         </div>
-
-        <button id="signIN" type="button">
-          Sign in
+        <script src="app.js"></script>
+        <button type="button" id="signin__btn">
+          Sign in bitch
           <i class="fas fa-arrow-right"></i>
         </button>
       </div>
-      </div>
     </div>
-
-    <script src="app.js"></script>
     <script>
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {

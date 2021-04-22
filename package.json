@@ -1,0 +1,24 @@
+{
+  "name": "ia2022",
+  "version": "1.0.0",
+  "description": "Author : Victoria Ng",
+  "main": "app.js",
+  "dependencies": {
+    "firebase": "^8.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/victoriang00/IA2022.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/victoriang00/IA2022/issues"
+  },
+  "homepage": "https://github.com/victoriang00/IA2022#readme"
+}

@@ -1,25 +1,16 @@
-/* add click effect*/
-const menu = document.querySelector("#mobile-menu");
-const menuLinks = document.querySelector(".navbar__menu");
+// Firebase App (the core Firebase SDK) is always required and
+// must be listed before other Firebase SDKs
+import firebase from "firebase/app";
 
-/* listen to click event */
-menu.addEventListener("click", function () {
-  menu.classList.toggle("is-active");
-  menuLinks.classList.toggle("active");
-});
+// Add the Firebase services that you want to use
+import "firebase/auth";
+import "firebase/firestore";
 
-// The core Firebase JS SDK is always required and must be listed first
-src = "https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js";
-
-//TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries
-src = "https://www.gstatic.com/firebasejs/8.4.1/firebase-analytics.js";
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 var firebaseConfig = {
   apiKey: "AIzaSyCHwwp-hRiL8ohdDpWOHIVN9wNYE9q5TXI",
   authDomain: "ia2022.firebaseapp.com",
   projectId: "ia2022",
+  databaseURL: "https://ia2022-default-rtdb.firebaseio.com",
   storageBucket: "ia2022.appspot.com",
   messagingSenderId: "318603254564",
   appId: "1:318603254564:web:89865e39a88f1bf9d7f1b1",
@@ -27,23 +18,17 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-firebase.analytics();
 
-firebase.auth.Auth.Persistence.LOCAL;
+document.getElementById("demo").addEventListener("click", myFunction);
 
-$("#sign__in").click(function () {
-  var email = $("email__input").val();
-  var pass = $("pass__input").val();
+function myFunction() {
+  document.getElementById("demo").innerHTML = "YOU CLICKED ME!";
+}
 
-  if (email != "" && pass != "") {
-    var result = firebase.auth().signInWithEmailAndPassword(email, pass);
-    result.catch(function (error) {
-      var errorCode = error.code;
-      var errorMsg = error.message;
+document
+  .getElementById("signin__btn")
+  .addEventListener("click", signInFunction());
 
-      alert("Error signing in " + errorMsg);
-    });
-  } else {
-    alert("Please fill in all fields");
-  }
-});
+function signInFunction() {
+  alert("yes");
+}
