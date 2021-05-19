@@ -1,16 +1,3 @@
-// Firebase App (the core Firebase SDK) is always required and
-// must be listed before other Firebase SDKs
-src = "https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js";
-
-//TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries
-src = "https://www.gstatic.com/firebasejs/8.4.1/firebase-analytics.js";
-// Firebase App (the core Firebase SDK) is always required and
-// must be listed before other Firebase SDKs
-import firebase from "firebase/app";
-// Add the Firebase services that you want to use
-import "firebase/auth";
-import "firebase/firestore";
-
 var firebaseConfig = {
   apiKey: "AIzaSyCHwwp-hRiL8ohdDpWOHIVN9wNYE9q5TXI",
   authDomain: "ia2022.firebaseapp.com",
@@ -21,14 +8,39 @@ var firebaseConfig = {
   appId: "1:318603254564:web:89865e39a88f1bf9d7f1b1",
   measurementId: "G-X78PMBTXKB",
 };
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+var provider = new firebase.auth.GoogleAuthProvider();
+
 var startButton = document
-  .querySelector("#signin__btn")
+  .querySelector("#signInB")
   .addEventListener("click", () => {
-    startGame();
+    signIn();
   });
 
-function startGame() {
-  var email = document.getElementById("email__input").value;
-  var pass = document.getElementById("pass__input").value;
-  alert(email + pass);
+function signIn() {
+  firebase
+    .auth()
+    .signInWithPopup(provider)
+    .then((result) => {
+      /** @type {firebase.auth.OAuthCredential} */
+      var credential = result.credential;
+
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      var token = credential.accessToken;
+      // The signed-in user info.
+      var user = result.user;
+      alert("Successfully Signed In");
+    })
+    .catch((error) => {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      alert("Error signing in: " + errorMessage);
+    });
 }

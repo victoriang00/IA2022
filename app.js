@@ -27,37 +27,3 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
-document.getElementById("demo").addEventListener("click", myFunction);
-
-function myFunction() {
-  document.getElementById("demo").innerHTML = "YOU CLICKED ME!";
-}
-
-// document
-//   .getElementById("signin__btn")
-//   .addEventListener("click", signInFunction());
-
-// function signInFunction() {
-//   alert("yes");
-// }
-
-//function myFunction() {
-// document.getElementById("demo").innerHTML = "hello";
-// var email = document.getElementById("email__input").value;
-// var pass = document.getElementById("pass__input").value;
-
-// firebase
-//   .auth()
-//   .signInWithEmailAndPassword(email, pass)
-//   .then((userCredential) => {
-//     // Signed in
-//     var user = userCredential.user;
-//     alert("Sucsessfully signed in: " + user.displayName);
-//   })
-//   .catch((error) => {
-//     var errorCode = error.code;
-//     var errorMessage = error.message;
-//     alert("Error signing in: " + errorCode + ": " + errorMessage);
-//   });
-//}
