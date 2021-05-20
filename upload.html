@@ -52,25 +52,21 @@
     <!-- Home Section -->
     <div class="home">
       <div class="home__search">
-        <input
-          type="text"
-          class="input"
-          placeholder="Search"
-          id="main_searchTxt"
-        />
+        <form action="/home.html">
+          <input type="file" id="myFile" name="filename" />
+          <!-- <input type="submit" /> -->
+        </form>
 
-        <div class="search__btn">
+        <div class="search__btn" id="uploadB">
           <i class="fas fa-search"></i>
         </div>
+        <script src="upload.js"></script>
       </div>
     </div>
-    <div class="upload">
-      <form action="/action_page.php">
-        <input type="file" id="myFile" name="filename" />
-        <input type="submit" />
-      </form>
-      <div class="tester" id="tester"></div>
-      <script src="upload.js"></script>
-    </div>
+    <!-- Upload stuff  -->
+    <input type="file" class="myFile" />
+    <progress min="0" max="100" value="65"></progress>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+    <script src="upload.js"></script>
   </body>
 </html>
