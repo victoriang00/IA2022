@@ -48,5 +48,29 @@
         </ul>
       </div>
     </nav>
+
+    <!-- Home Section -->
+    <div class="home">
+      <div class="home__search">
+        <input
+          type="text"
+          class="input"
+          placeholder="Search"
+          id="main_searchTxt"
+        />
+
+        <div class="search__btn">
+          <i class="fas fa-search"></i>
+        </div>
+      </div>
+    </div>
+    <div class="upload">
+      <form action="/action_page.php">
+        <input type="file" id="myFile" name="filename" />
+        <input type="submit" />
+      </form>
+      <div class="tester" id="tester"></div>
+      <script src="upload.js"></script>
+    </div>
   </body>
 </html>
