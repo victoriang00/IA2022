@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CIS Counselling Website</title>
     <link rel="stylesheet" href="styles.css" />
+    <!-- <link rel="stylesheet" href="styles.css" /> -->
+
+    <!-- Firebase auth -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
     <!-- font awesome needs to be in the head tag. insert the cnd link here-->
     <link
       rel="stylesheet"
@@ -18,6 +25,14 @@
       href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- GOogle shit for the sign in -->
+    <meta name="google-signin-scope" content="profile email" />
+    <meta
+      name="google-signin-client_id"
+      content="YOUR_CLIENT_ID.apps.googleusercontent.com"
+    />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
   </head>
   <body>
     <!--Navbar Section-->
@@ -53,20 +68,21 @@
     <div class="home">
       <div class="home__search">
         <form action="/home.html">
-          <input type="file" id="myFile" name="filename" />
+          <input type="file" id="notmyFile" name="filename" />
           <!-- <input type="submit" /> -->
         </form>
 
         <div class="search__btn" id="uploadB">
           <i class="fas fa-search"></i>
         </div>
-        <script src="upload.js"></script>
       </div>
     </div>
     <!-- Upload stuff  -->
+
     <input type="file" class="myFile" />
     <progress min="0" max="100" value="65"></progress>
-    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+
+    <button id="whatthefuck">what the fuck</button>
     <script src="upload.js"></script>
   </body>
 </html>

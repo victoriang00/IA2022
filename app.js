@@ -27,3 +27,7 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
+// var startButton = document
+//   .getElementById("whattheheck")
+//   .addEventListener("click", thisfunc());

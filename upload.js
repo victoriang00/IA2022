@@ -9,24 +9,11 @@ var firebaseConfig = {
   measurementId: "G-X78PMBTXKB",
 };
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-// var startButton = document
-//   .querySelector("#uploadB")
-//   .addEventListener("click", () => {
-//     alert("yoo");
-//   });
 
-var uploadButton = document
+var putshit = document
   .querySelector(".myFile")
   .addEventListener("change", (e) => {
-    alert(e);
     var file = e.target.files[0];
-    var storageRef = firebase.storage().ref("Thumbnails");
+    var storageRef = firebase.storage().ref("files/" + file.name);
     storageRef.put(file);
   });
-
-// document.querySelector(".myFile").addEventListener("change", (e) => {
-//   console.log(e);
-//   //   get the file name
-//   //   files is an array.
-// });
