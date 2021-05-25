@@ -1,20 +1,3 @@
-// Firebase App (the core Firebase SDK) is always required and
-// must be listed before other Firebase SDKs
-src = "https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js";
-
-//TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries
-src = "https://www.gstatic.com/firebasejs/8.4.1/firebase-analytics.js";
-// Firebase App (the core Firebase SDK) is always required and
-// must be listed before other Firebase SDKs
-
-// Firebase App (the core Firebase SDK) is always required and
-// must be listed before other Firebase SDKs
-import firebase from "firebase/app";
-
-// Add the Firebase services that you want to use
-import "firebase/auth";
-import "firebase/firestore";
-
 var firebaseConfig = {
   apiKey: "AIzaSyCHwwp-hRiL8ohdDpWOHIVN9wNYE9q5TXI",
   authDomain: "ia2022.firebaseapp.com",
@@ -27,7 +10,3 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
-// var startButton = document
-//   .getElementById("whattheheck")
-//   .addEventListener("click", thisfunc());

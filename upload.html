@@ -60,6 +60,23 @@
             <button class="button" id="signInB">Sign In</button>
             <script src="signin.js"></script>
           </li>
+          <li>
+            <a class="button" href="#" onclick="signOut();">Sign out</a>
+            <script>
+              function signOut() {
+                var auth2 = gapi.auth2.getAuthInstance();
+                auth2.signOut().then(function () {
+                  console.log("User signed out.");
+                });
+              }
+
+              // function onLoad() {
+              //   gapi.load("auth2", function () {
+              //     gapi.auth2.init();
+              //   });
+              // }
+            </script>
+          </li>
         </ul>
       </div>
     </nav>
@@ -68,8 +85,8 @@
     <div class="home">
       <div class="home__search">
         <form action="/home.html">
-          <input type="file" id="notmyFile" name="filename" />
-          <!-- <input type="submit" /> -->
+          <input type="file" class="myFile" name="filename" />
+          <progress min="0" max="100" value="65"></progress>
         </form>
 
         <div class="search__btn" id="uploadB">
@@ -77,12 +94,6 @@
         </div>
       </div>
     </div>
-    <!-- Upload stuff  -->
-
-    <input type="file" class="myFile" />
-    <progress min="0" max="100" value="65"></progress>
-
-    <button id="whatthefuck">what the fuck</button>
     <script src="upload.js"></script>
   </body>
 </html>

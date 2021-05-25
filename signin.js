@@ -20,27 +20,41 @@ var startButton = document
   });
 
 function signIn() {
-  firebase
-    .auth()
-    .signInWithPopup(provider)
-    .then((result) => {
-      /** @type {firebase.auth.OAuthCredential} */
-      var credential = result.credential;
+  if (auth2.isSignedIn.get()) {
+    alert("You're already signed in");
+  } else {
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        /** @type {firebase.auth.OAuthCredential} */
+        var credential = result.credential;
 
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      var token = credential.accessToken;
-      // The signed-in user info.
-      var user = result.user;
-      alert("Successfully Signed In");
-    })
-    .catch((error) => {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // The email of the user's account used.
-      var email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      var credential = error.credential;
-      alert("Error signing in: " + errorMessage);
-    });
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = credential.accessToken;
+        // The signed-in user info.
+        var user = result.user;
+        alert("Successfully Signed In");
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        alert("Error signing in: " + errorMessage);
+      });
+  }
+
+  onSignIn();
+}
+
+function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log("Name: " + profile.getName());
+  console.log("Image URL: " + profile.getImageUrl());
+  console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
 }
