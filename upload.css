@@ -249,9 +249,15 @@
   padding: 10px 20px;
   border: none;
 }
+
+.tags-input .main-input {
+  border: 0;
+  outline: none;
+  padding: 0.25em;
+  margin: 10px;
+}
 .tags-input {
   /* display: block; */
-  border: 1px solid #333;
   display: inline-block;
   position: absolute;
   top: 20%;
@@ -267,8 +273,30 @@
   display: inline-block;
   margin: 0.25em;
   background-color: #395373;
-  border-radius: 2px;
+  border-radius: 5px;
+  transition: all 0.2s linear;
 }
+.tags-input .tag:hover {
+  background-color: #cecece;
+  color: black;
+  cursor: pointer;
+}
+
+.tags-input .tag .close::after {
+  content: "x";
+  font-weight: bold;
+
+  display: inline-block;
+  transform: scale(1);
+  margin-left: 0.75em;
+  top: 0;
+}
+
+.tags-input .tag .close:hover::after {
+  cursor: pointer;
+  color: #ff4a3a;
+}
+
 .search__btn {
   background: #fff;
   width: 10%;
