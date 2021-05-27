@@ -7,12 +7,6 @@
     <title>CIS Counselling Website</title>
     <link rel="stylesheet" href="styles.css" />
 
-    <!-- Firebase auth -->
-    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
-
     <!-- font awesome needs to be in the head tag. insert the cnd link here-->
     <link
       rel="stylesheet"
@@ -25,14 +19,40 @@
       href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script> -->
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebase/8.6.2/firebase-auth.js"></script> -->
 
     <!-- GOogle shit for the sign in -->
     <meta name="google-signin-scope" content="profile email" />
     <meta
       name="google-signin-client_id"
-      content="YOUR_CLIENT_ID.apps.googleusercontent.com"
+      content="318603254564-glb7thebscqkvo5kis6tjosssvutiff7.apps.googleusercontent.com"
     />
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+      var firebaseConfig = {
+        apiKey: "AIzaSyCHwwp-hRiL8ohdDpWOHIVN9wNYE9q5TXI",
+        authDomain: "ia2022.firebaseapp.com",
+        projectId: "ia2022",
+        databaseURL: "https://ia2022-default-rtdb.firebaseio.com",
+        storageBucket: "ia2022.appspot.com",
+        messagingSenderId: "318603254564",
+        appId: "1:318603254564:web:89865e39a88f1bf9d7f1b1",
+        measurementId: "G-X78PMBTXKB",
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
   </head>
   <body>
     <!--Navbar Section-->
@@ -58,6 +78,10 @@
           </li>
           <li class="navbar__btn">
             <button class="button" id="signInB">Sign In</button>
+            <script src="signin.js"></script>
+          </li>
+          <li>
+            <a class="button" href="#" onclick="signOut();">Sign out</a>
             <script src="signin.js"></script>
           </li>
         </ul>

@@ -1,16 +1,3 @@
-var firebaseConfig = {
-  apiKey: "AIzaSyCHwwp-hRiL8ohdDpWOHIVN9wNYE9q5TXI",
-  authDomain: "ia2022.firebaseapp.com",
-  projectId: "ia2022",
-  databaseURL: "https://ia2022-default-rtdb.firebaseio.com",
-  storageBucket: "ia2022.appspot.com",
-  messagingSenderId: "318603254564",
-  appId: "1:318603254564:web:89865e39a88f1bf9d7f1b1",
-  measurementId: "G-X78PMBTXKB",
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
 var provider = new firebase.auth.GoogleAuthProvider();
 
 var startButton = document
@@ -18,43 +5,60 @@ var startButton = document
   .addEventListener("click", () => {
     signIn();
   });
-
-function signIn() {
-  if (auth2.isSignedIn.get()) {
-    alert("You're already signed in");
-  } else {
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then((result) => {
-        /** @type {firebase.auth.OAuthCredential} */
-        var credential = result.credential;
-
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        var token = credential.accessToken;
-        // The signed-in user info.
-        var user = result.user;
-        alert("Successfully Signed In");
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        alert("Error signing in: " + errorMessage);
-      });
-  }
-
-  onSignIn();
+function showUserDetails(user) {
+  document.getElementById("userdetails").innerHTML = `
+  <p>Name: ${user.displayName}</p>
+  <p>Email: ${user.email}</p>
+  `;
 }
+// later to make sign in and sign out button disappear.
+// function checkAuthState() {
+//   firebase.auth().onAuthStateChanged((user) => {
+//     if (user) {
+//       showUserDetails(user);
+//     } else {
+//       alert("user not logged in");
+//     }
+//   });
+// }
+function signIn() {
+  firebase
+    .auth()
+    .signInWithPopup(provider)
+    .then((result) => {
+      // /** @type {firebase.auth.OAuthCredential} */
+      // var credential = result.credential;
 
-function onSignIn(googleUser) {
-  var profile = googleUser.getBasicProfile();
-  console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.
-  console.log("Name: " + profile.getName());
-  console.log("Image URL: " + profile.getImageUrl());
-  console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
+      // // This gives you a Google Access Token. You can use it to access the Google API.
+      // var token = credential.accessToken;
+      // // The signed-in user info.
+      // var user = result.user;
+      console.log(result.user);
+      showUserDetails(result.user);
+    })
+    .catch((error) => {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      console.log(errorCode);
+      alert("Error signing in: " + errorMessage);
+    });
+}
+//checkAuthState();
+
+function signOut() {
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      alert("signed out");
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  //check video 18:36 to hide the buttons and shit
 }

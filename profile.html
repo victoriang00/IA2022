@@ -18,6 +18,13 @@
       href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <!-- GOogle shit for the sign in -->
+    <meta name="google-signin-scope" content="profile email" />
+    <meta
+      name="google-signin-client_id"
+      content="318603254564-glb7thebscqkvo5kis6tjosssvutiff7.apps.googleusercontent.com"
+    />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
   </head>
   <body>
     <!--Navbar Section-->
@@ -42,6 +49,10 @@
           </li>
           <li class="navbar__btn">
             <button class="button" id="signInB">Sign In</button>
+            <script src="signin.js"></script>
+          </li>
+          <li>
+            <a class="button" href="#" onclick="signOut();">Sign out</a>
             <script src="signin.js"></script>
           </li>
         </ul>
