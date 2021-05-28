@@ -30,6 +30,12 @@ document.getElementById("uploadB").addEventListener("click", () => {
   } else {
     var storageRef = firebase.storage().ref(uid + "/" + file.name);
     storageRef.put(file);
+    window.setTimeout(pushMeta(), 200);
+    // putStorage(storageRef, () => {
+    //   pushMeta();
+    // });
+
+    //writeUserData(uid, file.name, )
     console.log("Success");
   }
 });
@@ -46,23 +52,17 @@ function writeUserData(userId, filetype, fileName, tags) {
     });
 }
 //Get Metadata
-function getMeta() {
+function pushMeta() {
+  console.log("meta works");
   var storageRef = firebase.storage().ref(uid + "/" + file.name);
 
   storageRef
     .getMetadata()
     .then((metadata) => {
       console.log(metadata);
-      console.log(metadata.name);
-      console.log(metadata.contentType);
-      console.log(tags.text);
-      //       file_nume = metadata.getAttribute.
-      //       var file_name = "default_name";
-      // var file_type = "default_type";
-      // var tags = [];
     })
     .catch((error) => {
-      console.log("Error: Error getting Metadata");
+      console.log("Error: Error getting Metadata " + error);
     });
 }
 //Tags related things
