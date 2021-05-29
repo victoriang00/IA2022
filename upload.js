@@ -1,6 +1,6 @@
 var database = firebase.database();
+var user = ["default_id", "default_name", "default_email"];
 
-var uid = "default";
 var file = null;
 var file_name = "default_name";
 var file_type = "default_type";
@@ -8,19 +8,23 @@ var tags = [];
 checkAuthState();
 
 function checkAuthState() {
-  firebase.auth().onAuthStateChanged((user) => {
-    console.log("user is logged in");
-    if (user) {
-      console.log(user);
-      uid = user.uid;
+  firebase.auth().onAuthStateChanged((u) => {
+    console.log("User details: ");
+    if (u) {
+      console.log(u);
+      user[0] = u.uid;
+      user[1] = u.displayName;
+      user[2] = u.email;
     } else {
-      console.log("user not logged in");
+      console.log("User is currently not logged in");
       alert("Error: User not signed in, please sign in to upload");
     }
   });
 }
 document.querySelector(".myFile").addEventListener("change", (e) => {
   file = e.target.files[0];
+  console.log("File details: ");
+  console.log(file);
   checkAuthState();
 });
 
@@ -33,7 +37,9 @@ document.getElementById("uploadB").addEventListener("click", () => {
       .replace(/[^\w ]+/g, "")
       .trim()
       .replace(/ /g, "_");
-    var storageRef = firebase.storage().ref(uid + "/" + file_name);
+
+    file_type = file.type;
+    var storageRef = firebase.storage().ref(file_type + "/" + file_name);
     var uploadTask = storageRef.put(file);
 
     uploadTask.on(
@@ -41,7 +47,7 @@ document.getElementById("uploadB").addEventListener("click", () => {
       null,
       null,
       function () {
-        console.log("upload complete!");
+        console.log("File upload to storage completed successfully");
         getMeta();
       }
     );
@@ -50,36 +56,41 @@ document.getElementById("uploadB").addEventListener("click", () => {
 
 //Get Metadata
 function getMeta() {
-  var storageRef = firebase.storage().ref(uid + "/" + file_name);
+  var storageRef = firebase.storage().ref(file_type + "/" + file_name);
   storageRef
     .getMetadata()
     .then((metadata) => {
-      console.log("Got Meta succesfully");
       file_type = metadata.contentType;
       tags = filterTags(tags);
-      writeUserData(uid, file_type, file_name, tags);
+      writeUserData(user, file_type, file_name, tags);
     })
     .catch((error) => {
-      console.log("Error: Error getting Metadata " + error);
+      console.log(
+        "Error: Error getting Metadata or writing user data " + error
+      );
     });
 }
 
 // Write in Realtime Database
-function writeUserData(userId, filetype, fileName, tags) {
+function writeUserData(user, file_type, file_name, tags) {
   // fileName = firebase
-  var name = fileName
-    .replace(/\./g, "_")
-    .replace(/[^\w ]+/g, "")
-    .trim()
-    .replace(/ /g, "_");
+  // file_name
+  //   .replace(/\./g, "_")
+  //   .replace(/[^\w ]+/g, "")
+  //   .trim()
+  //   .replace(/ /g, "_");
 
   firebase
     .database()
-    .ref("users/" + userId + "/" + name)
+    .ref(file_type + "/" + file_name)
     .set({
-      file_type: filetype,
+      file_type: file_type,
+      file_name: file_name,
+      user: user,
+      // upload_user: userId;
       tags: tags,
     });
+  console.log("Details upload to database completed successfully");
 }
 
 //Tags related things
@@ -114,9 +125,9 @@ function filterTags(tags) {
       }
     });
   });
-
+  // make the delete thing work again
   mainInput.addEventListener("keydown", (e) => {
-    let keyCode = e.which || e.keyCode;
+    let keyCode = e || e.keyCode;
     if (keyCode == 8 && mainInput.value.length === 0 && tags.length > 0) {
       removeTag(tags.length - 1);
     }
@@ -124,7 +135,6 @@ function filterTags(tags) {
 
   el.appendChild(mainInput);
   el.appendChild(hiddenInput);
-  addTag("tester");
 
   function addTag(text) {
     let tag = {
