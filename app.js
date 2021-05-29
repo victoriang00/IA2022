@@ -1,30 +1,10 @@
-// //[].forEach.call(document.getElementsByClassName("main__container"), (el) => {
-// let hiddenInput = document.createElement("input"),
-//   mainInput = document.createElement("input");
-
-// hiddenInput.setAttribute("type", "visible");
-
-// // set as hidden if u want it to be hidden
-// hiddenInput.setAttribute("name", el.getAttribute("file__name"));
-
-// mainInput.setAttribute("type", "text");
-// mainInput.classList.add("main-input");
-
-// mainInput.addEventListener("input", () => {
-//   mainInput.addEventListener("keydown", (e) => {
-//     if (e == 13) {
-//       let tag = mainInput.value;
-//       if (tag.length > 0) {
-//         addTag(tag);
-//       }
-//     }
-//   });
-// });
-// //});
-
 var database = firebase.database();
+var prefixes = "";
 
-pageTokenExample();
+//pageTokenExample();
+//getAll();
+var thing = ["1", "yes", "trees", "twp", "5"];
+recursive(thing);
 
 for (var x = 0; x < 3; x++) {
   var hiddenInput = document.createElement("div");
@@ -34,36 +14,39 @@ for (var x = 0; x < 3; x++) {
   hiddenInput.textContent = "aha hello";
 
   var hiddenLink = document.createElement("a");
-  hiddenLink.setAttribute("class", "file__name");
+  hiddenLink.setAttribute("class", "hidden_name");
   hiddenLink.textContent = "click";
   hiddenLink.setAttribute("href", "res_info.html");
   hiddenInput.appendChild(hiddenLink);
 
   var hiddenTN = document.createElement("img");
-  //var hi = getTN();
-  //   hiddenTN.setAttribute("src", getTN(););
-  hiddenLink.setAttribute("class", "main__img__container");
+  hiddenTN.setAttribute("class", "main__img__container");
+  getTN();
+  //hiddenTN.setAttribute("src", hi);
+
   hiddenInput.appendChild(hiddenTN);
 
   var hiddenDesc = document.createElement("p");
-  hiddenLink.setAttribute("class", "file__desc");
+  hiddenDesc.setAttribute("class", "hidden_desc");
   hiddenInput.appendChild(hiddenDesc);
 
   document.getElementById("main__container").appendChild(hiddenInput);
 }
 
 function getTN() {
-  var storageRef = firebase.storage().ref(uid + "/" + file_name);
+  var storageRef = firebase.storage().ref("image/jpeg/stoner_core_jpg");
 
   storageRef
     .getDownloadURL()
     .then((url) => {
       // Or inserted into an <img> element
-      //   var img = document.getElementById("myimg");
+      //var img = document.getElementById("myimg");
       //   img.setAttribute("src", url);
       console.log(url);
-      //   return url;
+      hiddenTN.setAttribute("src", url);
+      //return url;
     })
+
     .catch((error) => {
       console.log("Error: Error getting URL " + error);
     });
@@ -96,14 +79,20 @@ function listPrefixes(pList) {
 async function pageTokenExample() {
   // Create a reference under which you want to list
   //   var storageRef = firebase.storage();
+  console.log("pagetoken");
   var listRef = firebase.storage().ref();
 
   // Fetch the first page of 102.
   var firstPage = await listRef.list({ maxResults: 102 });
+  console.log(firstPage.items);
+  if (firstPage.items.length == 0) {
+    console.log("nothing ");
+  }
+
   //   console.log("first page items: ");
   //   console.log(firstPage.items);
-  console.log("Prefixes");
-  var prefixes = listPrefixes(firstPage.prefixes);
+  // console.log("Prefixes");
+  prefixes = listPrefixes(firstPage.prefixes);
   console.log(prefixes);
 
   // Use the result.
@@ -119,4 +108,43 @@ async function pageTokenExample() {
   //     // processItems(secondPage.items)
   //     // processPrefixes(secondPage.prefixes)
   //   }
+}
+var thing = ["1", "yes", "trees", "twp", "5"];
+
+function recursive(vari, ref) {
+  storageRef = ref;
+  if (vari.length == 1) {
+    var listRef = "firebase.storage().ref(vari[0])";
+    console.log("last");
+    console.log(listRef);
+    return listRef;
+  }
+
+  console.log(vari[0]);
+  listRef = "firebase.storage().ref(vari[0])";
+  vari.splice(0, 1);
+  recursive(vari);
+}
+function getAll() {
+  var listRef = firebase.storage().ref(addedRef);
+  //Find all the prefixes and items.
+  listRef
+    .listAll()
+    .then((res) => {
+      res.prefixes.forEach((folderRef) => {
+        console.log("These are the folders: ");
+        console.log(folderRef);
+
+        // All the prefixes under listRef.
+        // You may call listAll() recursively on them.
+      });
+      res.items.forEach((itemRef) => {
+        console.log("These are the items: ");
+        console.log(itemRef);
+        // All the items under listRef.
+      });
+    })
+    .catch((error) => {
+      // Uh-oh, an error occurred!
+    });
 }
