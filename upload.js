@@ -73,13 +73,6 @@ function getMeta() {
 
 // Write in Realtime Database
 function writeUserData(user, file_type, file_name, tags) {
-  // fileName = firebase
-  // file_name
-  //   .replace(/\./g, "_")
-  //   .replace(/[^\w ]+/g, "")
-  //   .trim()
-  //   .replace(/ /g, "_");
-
   firebase
     .database()
     .ref(file_type + "/" + file_name)
