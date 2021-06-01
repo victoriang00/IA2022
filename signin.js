@@ -5,12 +5,7 @@ var startButton = document
   .addEventListener("click", () => {
     signIn();
   });
-function showUserDetails(user) {
-  document.getElementById("userdetails").innerHTML = `
-  <p>Name: ${user.displayName}</p>
-  <p>Email: ${user.email}</p>
-  `;
-}
+
 // later to make sign in and sign out button disappear.
 // function checkAuthState() {
 //   firebase.auth().onAuthStateChanged((user) => {
@@ -34,7 +29,7 @@ function signIn() {
       // // The signed-in user info.
       // var user = result.user;
       console.log(result.user);
-      showUserDetails(result.user);
+      alert("User is successfully signed in");
     })
     .catch((error) => {
       // Handle Errors here.

@@ -29,29 +29,33 @@ getAll(listRef);
 //   document.getElementById("main__container").appendChild(hiddenInput);
 // }
 
-function hiddenTN(url) {
+function hiddenTN(url, div2) {
   var hiddenTN = document.createElement("img");
   hiddenTN.setAttribute("class", "main__img__container");
   hiddenTN.setAttribute("src", url);
-  return hiddenTN;
+  addInput(div2, hiddenTN);
 }
-function addInput(TN) {
+function addInput(div, div2) {
   var hiddenInput = document.createElement("div");
   hiddenInput.setAttribute("type", "visible");
-  hiddenInput.textContent = "aha hello";
 
-  hiddenInput.appendChild(TN);
+  hiddenInput.appendChild(div);
+  hiddenInput.appendChild(div2);
+  // console.log(div);
+  // console.log(div2);
   document.getElementById("main__container").appendChild(hiddenInput);
 }
 
-function getTN(itemRef) {
+function getTN(itemRef, div2) {
   var storageRef = itemRef;
 
   storageRef
     .getDownloadURL()
     .then((url) => {
       // console.log(url);
-      // addInput(hiddenTN(url));
+      //get the other div in here
+      hiddenTN(url, div2);
+      //somehow get addInput to run here
     })
 
     .catch((error) => {
@@ -59,21 +63,27 @@ function getTN(itemRef) {
     });
 }
 
-// function getFileName() {}
+function hiddenLink(name) {
+  var hiddenLink = document.createElement("a");
+  hiddenLink.setAttribute("class", "hidden_name");
+  hiddenLink.textContent = name;
+  hiddenLink.setAttribute("href", "res_info.html");
+  return hiddenLink;
+}
 
-//  function getMeta() {
-//   var storageRef = firebase.storage().ref(uid + "/" + file_name);
-//   storageRef
-//     .getMetadata()
-//     .then((metadata) => {
-//       file_type = metadata.contentType;
-//       tags = filterTags(tags);
-//       writeUserData(uid, file_type, file_name, tags);
-//     })
-//     .catch((error) => {
-//       console.log("Error: Error getting Metadata " + error);
-//     });
-// }
+function getMeta() {
+  var storageRef = firebase.storage().ref(uid + "/" + file_name);
+  storageRef
+    .getMetadata()
+    .then((metadata) => {
+      file_type = metadata.contentType;
+      tags = filterTags(tags);
+      writeUserData(uid, file_type, file_name, tags);
+    })
+    .catch((error) => {
+      console.log("Error: Error getting Metadata " + error);
+    });
+}
 
 function listPrefixes(pList) {
   var newList = [];
@@ -130,7 +140,10 @@ function getAll(path) {
       res.items.forEach((itemRef) => {
         // console.log("These are the items: ");
         // console.log(itemRef);
-        getTN(itemRef);
+
+        var name = itemRef.name;
+        var link = hiddenLink(name);
+        getTN(itemRef, link);
       });
     })
     .catch((error) => {
