@@ -7,27 +7,6 @@ var listRef = firebase.storage().ref();
 
 //Make all the initial files show up
 getAll(listRef);
-// function addRes() {
-//   var hiddenInput = document.createElement("div");
-
-//   hiddenInput.setAttribute("type", "visible");
-//   hiddenInput.textContent = "aha hello";
-
-//   var hiddenLink = document.createElement("a");
-//   hiddenLink.setAttribute("class", "hidden_name");
-//   hiddenLink.textContent = "click";
-//   hiddenLink.setAttribute("href", "res_info.html");
-//   hiddenInput.appendChild(hiddenLink);
-
-//   getTN(itemRef);
-//   hiddenInput.appendChild(hiddenTN);
-
-//   var hiddenDesc = document.createElement("p");
-//   hiddenDesc.setAttribute("class", "hidden_desc");
-//   hiddenInput.appendChild(hiddenDesc);
-
-//   document.getElementById("main__container").appendChild(hiddenInput);
-// }
 
 function hiddenTN(url, div2) {
   var hiddenTN = document.createElement("img");
@@ -37,13 +16,13 @@ function hiddenTN(url, div2) {
 }
 function addInput(div, div2) {
   var hiddenInput = document.createElement("div");
-  hiddenInput.setAttribute("type", "visible");
 
   hiddenInput.appendChild(div);
   hiddenInput.appendChild(div2);
   // console.log(div);
   // console.log(div2);
   document.getElementById("main__container").appendChild(hiddenInput);
+  hiddenInput.setAttribute("type", "visible");
 }
 
 function getTN(itemRef, div2) {
@@ -71,59 +50,12 @@ function hiddenLink(name) {
   return hiddenLink;
 }
 
-function getMeta() {
-  var storageRef = firebase.storage().ref(uid + "/" + file_name);
-  storageRef
-    .getMetadata()
-    .then((metadata) => {
-      file_type = metadata.contentType;
-      tags = filterTags(tags);
-      writeUserData(uid, file_type, file_name, tags);
-    })
-    .catch((error) => {
-      console.log("Error: Error getting Metadata " + error);
-    });
-}
-
 function listPrefixes(pList) {
   var newList = [];
   for (var x = 0; x < pList.length; x++) {
     newList.push(pList[x].name);
   }
   return newList;
-}
-
-async function pageTokenExample() {
-  // Create a reference under which you want to list
-  //   var storageRef = firebase.storage();
-  var listRef = firebase.storage().ref();
-
-  // Fetch the first page of 102.
-  var firstPage = await listRef.list({ maxResults: 102 });
-  console.log(firstPage.items);
-  if (firstPage.items.length == 0) {
-    console.log("nothing ");
-  }
-
-  //   console.log("first page items: ");
-  //   console.log(firstPage.items);
-  // console.log("Prefixes");
-  prefixes = listPrefixes(firstPage.prefixes);
-  console.log(prefixes);
-
-  // Use the result.
-  // processItems(firstPage.items)
-  // processPrefixes(firstPage.prefixes)
-
-  //   // Fetch the second page if there are more elements.
-  //   if (firstPage.nextPageToken) {
-  //     var secondPage = await listRef.list({
-  //       maxResults: 100,
-  //       pageToken: firstPage.nextPageToken,
-  //     });
-  //     // processItems(secondPage.items)
-  //     // processPrefixes(secondPage.prefixes)
-  //   }
 }
 
 function getAll(path) {
@@ -133,13 +65,13 @@ function getAll(path) {
     .listAll()
     .then((res) => {
       res.prefixes.forEach((folderRef) => {
-        // console.log("These are the folders: ");
-        // console.log(folderRef);
+        console.log("These are the folders: ");
+        console.log(folderRef);
         getAll(folderRef);
       });
       res.items.forEach((itemRef) => {
-        // console.log("These are the items: ");
-        // console.log(itemRef);
+        console.log("These are the items: ");
+        console.log(itemRef);
 
         var name = itemRef.name;
         var link = hiddenLink(name);
@@ -164,16 +96,13 @@ function filterTags(tags) {
   return filteredTags;
 }
 
-[].forEach.call(document.getElementsByClassName("tags-search"), (el) => {
+[].forEach.call(document.getElementsByClassName("home__search"), (el) => {
   console.log("does it work");
   let hiddenInput = document.createElement("input"),
-    mainInput = document.createElement("input");
+    mainInput = document.getElementById("tags-search");
 
   hiddenInput.setAttribute("type", "hidden");
-  hiddenInput.setAttribute("name", el.getAttribute("data-name"));
-
-  mainInput.setAttribute("type", "text");
-  mainInput.classList.add("main-input");
+  hiddenInput.setAttribute("name", "data-name");
 
   mainInput.addEventListener("input", () => {
     mainInput.addEventListener("keydown", (e) => {
@@ -195,8 +124,8 @@ function filterTags(tags) {
     }
   });
 
-  el.appendChild(mainInput);
   el.appendChild(hiddenInput);
+  addTag("hello");
 
   function addTag(text) {
     let tag = {
@@ -215,10 +144,14 @@ function filterTags(tags) {
     });
 
     tags.push(tag);
-    el.insertBefore(tag.element, mainInput);
+    insertAfter(tag.element, mainInput);
     mainInput.value = "";
     refreshTags();
     filterTags(tags);
+  }
+
+  function insertAfter(newNode, referenceNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
   }
 
   function removeTag(index) {

@@ -230,9 +230,9 @@
   z-index: 1;
 }
 .home__search {
-  display: flex;
+  display: inline-block;
   position: relative;
-  top: 20px;
+  top: 35px;
   left: auto;
   transform: translate(0, -50%);
   background-color: #cecece;
@@ -243,29 +243,13 @@
   justify-content: space-between;
 }
 
-.home__search .tags-search {
-  width: 50%;
+.tags-search {
+  width: 75%;
   padding: 10px 20px;
   border: none;
 }
 
-.tags-input .main-input {
-  border: 0;
-  outline: none;
-  padding: 0.25em;
-  margin: 10px;
-}
-.tags-input {
-  /* display: block; */
-  display: inline-block;
-  position: absolute;
-  top: 10%;
-  bottom: auto;
-  left: 5px;
-  /* margin-top: -5%;
-    padding: 2%; */
-}
-.tags-input .tag {
+.tag {
   font-size: 70%;
   color: #cecece;
   padding: 0.5em 0.75em;
@@ -275,13 +259,14 @@
   border-radius: 5px;
   transition: all 0.2s linear;
 }
-.tags-input .tag:hover {
+
+.tag:hover {
   background-color: #cecece;
   color: black;
   cursor: pointer;
 }
 
-.tags-input .tag .close::after {
+.tag .close::after {
   content: "x";
   font-weight: bold;
 
@@ -291,22 +276,22 @@
   top: 0;
 }
 
-.tags-input .tag .close:hover::after {
+.tag .close:hover::after {
   cursor: pointer;
   color: #ff4a3a;
 }
 
 .search__btn {
-  background: #fff;
   width: 10%;
   border-radius: 5px;
   position: relative;
   cursor: pointer;
+  display: inline-block;
 }
 
 .search__btn .fas {
   position: absolute;
-  top: 50%;
+  top: auto;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 18px;
@@ -346,6 +331,7 @@
   -webkit-line-clamp: 3; /* number of lines to show */
   -webkit-box-orient: vertical;
   margin: 0px 10px;
+  color: green;
 }
 
 .main__img__container {
@@ -359,7 +345,8 @@
   height: 200px;
 }
 
-.file__namei {
+.file__name {
+  color: #ff4a3a;
   text-align: justify;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -367,6 +354,17 @@
   -webkit-line-clamp: 3; /* number of lines to show */
   -webkit-box-orient: vertical;
   margin: 5px;
+}
+
+.hidden_name {
+  color: #395373;
+  text-align: justify;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* number of lines to show */
+  -webkit-box-orient: vertical;
+  margin: 10px 10px;
 }
 
 /* Scaling */

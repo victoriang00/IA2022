@@ -21,13 +21,6 @@ function signIn() {
     .auth()
     .signInWithPopup(provider)
     .then((result) => {
-      // /** @type {firebase.auth.OAuthCredential} */
-      // var credential = result.credential;
-
-      // // This gives you a Google Access Token. You can use it to access the Google API.
-      // var token = credential.accessToken;
-      // // The signed-in user info.
-      // var user = result.user;
       console.log(result.user);
       alert("User is successfully signed in");
     })
@@ -55,5 +48,4 @@ function signOut() {
     .catch((e) => {
       console.log(e);
     });
-  //check video 18:36 to hide the buttons and shit
 }
