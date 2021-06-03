@@ -1,23 +1,24 @@
 var database = firebase.database();
-
 var listRef = firebase.storage().ref();
 
 //Make all the initial files show up
 getAll(listRef);
 
-// function hiddenInfo(url) {
-//   var fileInfo = {
-//     file_url: url,
-//   };
-//   module.exports = { Student };
-// }
+function hiddenInfo(url, name) {
+  var fileInfo = {
+    file_url: url,
+    file_name: name,
+  };
+}
 
 // Create div for the thumbnail and set the image to the thumbnail
 function hiddenTN(url, div2) {
   var hiddenTN = document.createElement("img");
   hiddenTN.setAttribute("class", "main__img__container");
   hiddenTN.setAttribute("src", url);
-  //hiddenInfo(url);
+
+  var name = div2.innerHTML;
+  hiddenInfo(url, name);
 
   addInput(div2, hiddenTN);
 }
@@ -66,7 +67,6 @@ function listPrefixes(pList) {
 
 function getAll(path) {
   //Find all the prefixes and items.
-  console.log("get all is running " + path);
   listRef = path;
   listRef
     .listAll()
