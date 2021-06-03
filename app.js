@@ -2,26 +2,24 @@ var database = firebase.database();
 
 var listRef = firebase.storage().ref();
 
-
 //Make all the initial files show up
 getAll(listRef);
+filterAll("", []);
 
-function passVars() {
-  var Student = {
-    file_name: "k"
-    name: "ABC",
-    age: 18,
-    dept: "CSE",
-    score: 90,
-  };
-  module.exports = { Student };
-}
+// function hiddenInfo(url) {
+//   var fileInfo = {
+//     file_url: url,
+//   };
+//   module.exports = { Student };
+// }
 
 // Create div for the thumbnail and set the image to the thumbnail
 function hiddenTN(url, div2) {
   var hiddenTN = document.createElement("img");
   hiddenTN.setAttribute("class", "main__img__container");
   hiddenTN.setAttribute("src", url);
+  //hiddenInfo(url);
+
   addInput(div2, hiddenTN);
 }
 
@@ -94,28 +92,52 @@ function getAll(path) {
 
 function filterAll(path, tags) {
   //Find all the prefixes and items.
-  listRef = path;
-  listRef
-    .listAll()
-    .then((res) => {
-      res.prefixes.forEach((folderRef) => {
-        console.log("These are the folders: ");
-        console.log(folderRef);
-        getAll(folderRef);
-      });
-      res.items.forEach((itemRef) => {
-        console.log("These are the items: ");
-        console.log(itemRef);
+  console.log("hi");
+  var starCountRef = firebase
+    .database()
+    .ref("ia2022-default-rtdb/image/jpeg/_jpg");
+  starCountRef.on("value", (snapshot) => {
+    var data = snapshot.val();
+    var what = snapshot.exist();
+    if (what) {
+      console.log("please fucking work thanks");
+    } else {
+      console.log("lol");
+    }
 
-        var name = itemRef.name;
-        var link = hiddenLink(name);
-        getTN(itemRef, link);
-      });
-    })
-    .catch((error) => {
-      // Uh-oh, an error occurred!
-      console.log("Error: Error getting all files." + error);
-    });
+    console.log("hi" + data);
+  });
+  // listRef = path;
+  // var image = tags.map((e) => e.toLocaleLowerCase()).includes("image");
+
+  // var pdf = tags.map((e) => e.toLocaleLowerCase()).includes("pdf");
+  // var audio = tags.map((e) => e.toLocaleLowerCase()).includes("audio");
+
+  // if (image) {
+  //   listRef = firebase.storage.ref;
+  // }
+
+  // listRef
+  //   .listAll()
+  //   .then((res) => {
+  //     res.prefixes.forEach((folderRef) => {
+  //       console.log("These are the folders: ");
+  //       console.log(folderRef);
+  //       getAll(folderRef);
+  //     });
+  //     res.items.forEach((itemRef) => {
+  //       console.log("These are the items: ");
+  //       console.log(itemRef);
+
+  //       var name = itemRef.name;
+  //       var link = hiddenLink(name);
+  //       getTN(itemRef, link);
+  //     });
+  //   })
+  //   .catch((error) => {
+  //     // Uh-oh, an error occurred!
+  //     console.log("Error: Error getting all files." + error);
+  //   });
 }
 
 // TAGS RELATED THINGS
