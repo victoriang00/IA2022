@@ -30,6 +30,7 @@ function addInput(div, div2) {
   hiddenInput.appendChild(div2);
   document.getElementById("main__container").appendChild(hiddenInput);
   hiddenInput.setAttribute("type", "visible");
+  hiddenInput.setAttribute("class", "hiddenDivs");
 }
 
 function getTN(itemRef, div2) {
@@ -65,7 +66,7 @@ function listPrefixes(pList) {
 
 function getAll(path) {
   //Find all the prefixes and items.
-  console.log("get all is running" + path);
+  console.log("get all is running " + path);
   listRef = path;
   listRef
     .listAll()
@@ -90,32 +91,30 @@ function getAll(path) {
     });
 }
 
-function getDB(ref) {
-  var fileRef = ref;
+// function getDB(ref) {
+//   var fileRef = ref;
 
-  fileRef.on(
-    "value",
-    (snapshot) => {
-      var data = snapshot.val();
+//   fileRef.on(
+//     "value",
+//     (snapshot) => {
+//       var data = snapshot.val();
 
-      console.log("Logged Data: ");
-      var obs = data.jpeg;
-      console.log(obs);
-      Object.values(obs).forEach((item) => {
-        console.log(item);
-        var name = item.file_name;
-        var type = item.file_type;
-        var itemRef = firebase.storage().ref(type + "/" + name);
-        getAll(itemRef);
-        // var link = hiddenLink(name);
-        // getTN(itemRef, link);
-      });
-    },
-    function (error) {
-      console.error("Error filtering resources " + error);
-    }
-  );
-}
+//       console.log("Logged Data: ");
+//       var obs = data.jpeg;
+//       console.log(obs);
+//       Object.values(obs).forEach((item) => {
+//         console.log(item);
+//         var name = item.file_name;
+//         var type = item.file_type;
+//         var itemRef = firebase.storage().ref(type + "/" + name);
+//         getAll(itemRef);
+//       });
+//     },
+//     function (error) {
+//       console.error("Error filtering resources " + error);
+//     }
+//   );
+// }
 function filterAll(tags) {
   //Find all the prefixes and items.
   fileRef = firebase.database().ref();
@@ -125,16 +124,16 @@ function filterAll(tags) {
   var audio = tags.map((e) => e.toLocaleLowerCase()).includes("audio");
 
   if (image) {
-    fileRef = firebase.database().ref("image");
-    getDB(fileRef);
+    fileRef = firebase.storage().ref("image");
+    getAll(fileRef);
   }
   if (pdf) {
-    fileRef = firebase.database().ref("application/pdf");
-    getDB(fileRef);
+    fileRef = firebase.storage().ref("application/pdf");
+    getAll(fileRef);
   }
   if (audio) {
-    fileRef = firebase.database().ref("audio");
-    getDB(fileRef);
+    fileRef = firebase.storage().ref("audio");
+    getAll(fileRef);
   }
 }
 
@@ -155,6 +154,7 @@ function filterTags(tags) {
     mainInput = document.getElementById("tags-search");
 
   hiddenInput.setAttribute("type", "hidden");
+
   hiddenInput.setAttribute("name", "data-name");
   hiddenInput.setAttribute("id", "tagDiv");
 
@@ -227,5 +227,13 @@ function filterTags(tags) {
 // Search button
 document.getElementById("search__btn").addEventListener("click", () => {
   filteredTags = filterTags(tags);
+  // var paras = document.getElementsByClassName("hiddenDivs");
+  // console.log("this is filter");
+  // console.log(paras[0]);
+  // while(paras[0]) {
+  //     //paras[0].parentNode.removeChild(paras[0]);
+  //     console.log("what")
+  // }​
+  document.querySelectorAll(".hiddenDivs").forEach((e) => e.remove());
   filterAll(filteredTags);
 });
