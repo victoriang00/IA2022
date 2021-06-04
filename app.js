@@ -1,3 +1,4 @@
+import * as constants from "./constants.js";
 var database = firebase.database();
 var listRef = firebase.storage().ref();
 
@@ -5,10 +6,11 @@ var listRef = firebase.storage().ref();
 getAll(listRef);
 
 function hiddenInfo(url, name) {
-  var fileInfo = {
-    file_url: url,
-    file_name: name,
-  };
+  var hiddenInfo = document.createElement("div");
+  hiddenInfo.setAttribute("class", "hiddenInfo");
+  hiddenInfo.setAttribute("file_url", url);
+  hiddenInfo.setAttribute("file_name", name);
+  return hiddenInfo;
 }
 
 // Create div for the thumbnail and set the image to the thumbnail
@@ -18,17 +20,18 @@ function hiddenTN(url, div2) {
   hiddenTN.setAttribute("src", url);
 
   var name = div2.innerHTML;
-  hiddenInfo(url, name);
+  var hInfo = hiddenInfo(url, name);
 
-  addInput(div2, hiddenTN);
+  addInput(div2, hiddenTN, hInfo);
 }
 
 // Append div1 and div2 to the outer div, hiddenInput
-function addInput(div, div2) {
+function addInput(div, div2, div3) {
   var hiddenInput = document.createElement("div");
 
   hiddenInput.appendChild(div);
   hiddenInput.appendChild(div2);
+  hiddenInput.appendChild(div3);
   document.getElementById("main__container").appendChild(hiddenInput);
   hiddenInput.setAttribute("type", "visible");
   hiddenInput.setAttribute("class", "hiddenDivs");
@@ -54,6 +57,10 @@ function hiddenLink(name) {
   hiddenLink.textContent = name;
 
   hiddenLink.setAttribute("href", "res_info.html");
+  hiddenLink.setAttribute("file_name", name);
+  constants.file_name = name;
+  export var ind_name = name;
+
   return hiddenLink;
 }
 
@@ -117,7 +124,7 @@ function getAll(path) {
 // }
 function filterAll(tags) {
   //Find all the prefixes and items.
-  fileRef = firebase.database().ref();
+  var fileRef = firebase.database().ref();
   var image = tags.map((e) => e.toLocaleLowerCase()).includes("image");
 
   var pdf = tags.map((e) => e.toLocaleLowerCase()).includes("pdf");
@@ -226,14 +233,8 @@ function filterTags(tags) {
 
 // Search button
 document.getElementById("search__btn").addEventListener("click", () => {
-  filteredTags = filterTags(tags);
-  // var paras = document.getElementsByClassName("hiddenDivs");
-  // console.log("this is filter");
-  // console.log(paras[0]);
-  // while(paras[0]) {
-  //     //paras[0].parentNode.removeChild(paras[0]);
-  //     console.log("what")
-  // }​
+  var filteredTags = filterTags(tags);
+
   document.querySelectorAll(".hiddenDivs").forEach((e) => e.remove());
   filterAll(filteredTags);
 });
