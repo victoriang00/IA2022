@@ -1,4 +1,3 @@
-import * as constants from "./constants.js";
 var database = firebase.database();
 var listRef = firebase.storage().ref();
 
@@ -32,6 +31,7 @@ function addInput(div, div2, div3) {
   hiddenInput.appendChild(div);
   hiddenInput.appendChild(div2);
   hiddenInput.appendChild(div3);
+
   document.getElementById("main__container").appendChild(hiddenInput);
   hiddenInput.setAttribute("type", "visible");
   hiddenInput.setAttribute("class", "hiddenDivs");
@@ -51,15 +51,14 @@ function getTN(itemRef, div2) {
     });
 }
 
-function hiddenLink(name) {
+function hiddenLink(name, path) {
   var hiddenLink = document.createElement("a");
   hiddenLink.setAttribute("class", "hidden_name");
   hiddenLink.textContent = name;
 
-  hiddenLink.setAttribute("href", "res_info.html");
+  hiddenLink.setAttribute("href", "res_info.html#" + path);
   hiddenLink.setAttribute("file_name", name);
-  constants.file_name = name;
-  export var ind_name = name;
+  // constants.file_name = name;
 
   return hiddenLink;
 }
@@ -79,16 +78,17 @@ function getAll(path) {
     .listAll()
     .then((res) => {
       res.prefixes.forEach((folderRef) => {
-        console.log("These are the folders: ");
-        console.log(folderRef);
+        // console.log("These are the folders: ");
+        // console.log(folderRef);
+        folderRef = folderRef;
         getAll(folderRef);
       });
       res.items.forEach((itemRef) => {
         console.log("These are the items: ");
         console.log(itemRef);
-
+        console.log(itemRef.fullPath);
         var name = itemRef.name;
-        var link = hiddenLink(name);
+        var link = hiddenLink(name, itemRef.fullPath);
         getTN(itemRef, link);
       });
     })
