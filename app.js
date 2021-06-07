@@ -16,7 +16,9 @@ function hiddenInfo(url, name) {
 function hiddenTN(url, div2) {
   var hiddenTN = document.createElement("img");
   hiddenTN.setAttribute("class", "main__img__container");
-  hiddenTN.setAttribute("src", url);
+  if (url != "no") {
+    hiddenTN.setAttribute("src", url);
+  }
 
   var name = div2.innerHTML;
   var hInfo = hiddenInfo(url, name);
@@ -39,16 +41,22 @@ function addInput(div, div2, div3) {
 
 function getTN(itemRef, div2) {
   var storageRef = itemRef;
+  console.log("this is the storage ref ");
+  console.log(storageRef.parent.fullPath);
+  if (storageRef.parent.fullPath.includes("image")) {
+    storageRef
+      .getDownloadURL()
+      .then((url) => {
+        hiddenTN(url, div2);
+      })
 
-  storageRef
-    .getDownloadURL()
-    .then((url) => {
-      hiddenTN(url, div2);
-    })
-
-    .catch((error) => {
-      console.log("Error: Error getting URL " + error);
-    });
+      .catch((error) => {
+        console.log("Error: Error getting URL " + error);
+      });
+    // hiddenTN()
+  } else {
+    hiddenTN("no", div2);
+  }
 }
 
 function hiddenLink(name, path) {

@@ -1,10 +1,10 @@
 var provider = new firebase.auth.GoogleAuthProvider();
 
-var startButton = document
-  .querySelector("#signInB")
-  .addEventListener("click", () => {
-    signIn();
-  });
+// var startButton = document
+//   .querySelector("#signInB")
+//   .addEventListener("click", () => {
+//     signIn();
+//   });
 
 // later to make sign in and sign out button disappear.
 // function checkAuthState() {
