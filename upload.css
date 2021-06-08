@@ -257,15 +257,13 @@
   margin: 10px;
 }
 .tags-input {
-  /* display: block; */
   display: inline-block;
   position: absolute;
   top: 10%;
   bottom: auto;
   left: 5px;
-  /* margin-top: -5%;
-    padding: 2%; */
 }
+
 .tags-input .tag {
   font-size: 70%;
   color: #cecece;
@@ -303,6 +301,15 @@
   top: 50%;
   bottom: auto;
   left: 5px;
+  max-width: 750px;
+}
+
+.desc-input #descInput {
+  border: 0;
+  outline: none;
+  padding: 0.25em;
+  margin: 10px;
+  width: 250px;
 }
 
 .search__btn {

@@ -5,6 +5,7 @@ var file = null;
 var file_name = "default_name";
 var file_type = "default_type";
 var tags = [];
+var desc = "";
 checkAuthState();
 
 function checkAuthState() {
@@ -62,7 +63,8 @@ function getMeta() {
     .then((metadata) => {
       file_type = metadata.contentType;
       tags = filterTags(tags);
-      writeUserData(user, file_type, file_name, tags);
+      getDesc();
+      writeUserData(user, file_type, file_name, tags, desc);
     })
     .catch((error) => {
       console.log(
@@ -72,7 +74,7 @@ function getMeta() {
 }
 
 // Write in Realtime Database
-function writeUserData(user, file_type, file_name, tags) {
+function writeUserData(user, file_type, file_name, tags, descIn) {
   firebase
     .database()
     .ref(file_type + "/" + file_name)
@@ -80,9 +82,11 @@ function writeUserData(user, file_type, file_name, tags) {
       file_type: file_type,
       file_name: file_name,
       user: user,
-      // upload_user: userId;
+      desc: descIn,
       tags: tags,
     });
+  descInput.value = "";
+  desc = "";
   console.log("Details upload to database completed successfully");
 }
 
@@ -168,3 +172,15 @@ function filterTags(tags) {
     hiddenInput.value = tagsList.join(",");
   }
 });
+
+// Desc related things
+
+function getDesc() {
+  var descInput = document.getElementById("descInput");
+  autosize(document.getElementById("descInput"));
+  let temp = descInput.value;
+  if (temp.length > 0) {
+    desc = temp;
+    console.log(desc);
+  }
+}
