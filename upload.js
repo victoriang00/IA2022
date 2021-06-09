@@ -39,7 +39,15 @@ document.getElementById("uploadB").addEventListener("click", () => {
       .trim()
       .replace(/ /g, "_");
 
-    file_type = file.type;
+    var mod = file_type.split(/_(.+)/)[1];
+    var parent = file_type.split(/_(.+)/)[0];
+    mod = mod
+      .replace(/\./g, "_")
+      .replace(/[^\w ]+/g, "")
+      .trim()
+      .replace(/ /g, "_");
+
+    file_type = parent + "/" + mod;
     var storageRef = firebase.storage().ref(file_type + "/" + file_name);
     var uploadTask = storageRef.put(file);
 
@@ -61,9 +69,17 @@ function getMeta() {
   storageRef
     .getMetadata()
     .then((metadata) => {
-      file_type = metadata.contentType;
-      tags = filterTags(tags);
-      getDesc();
+      var mod = file_type.split(/(/)/)[1];
+      var parent = file_type.split(/(/.+)/)[0];
+      mod = mod
+        .replace(/\./g, "_")
+        .replace(/[^\w ]+/g, "")
+        .trim()
+        .replace(/ /g, "_");
+
+      file_type = parent + "/" + mod;
+      // tags = filterTags(tags);
+      // getDesc();
       writeUserData(user, file_type, file_name, tags, desc);
     })
     .catch((error) => {
@@ -87,6 +103,7 @@ function writeUserData(user, file_type, file_name, tags, descIn) {
     });
   descInput.value = "";
   desc = "";
+  tags = [];
   console.log("Details upload to database completed successfully");
 }
 
