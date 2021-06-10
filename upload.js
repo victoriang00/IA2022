@@ -33,21 +33,10 @@ document.getElementById("uploadB").addEventListener("click", () => {
   if (file == null) {
     alert("Error: no file has been attached");
   } else {
-    file_name = file.name
-      .replace(/\./g, "_")
-      .replace(/[^\w ]+/g, "")
-      .trim()
-      .replace(/ /g, "_");
+    file_name = file.name.trim().replace(/[\.#$[\] ]+/g, "_");
 
-    var mod = file_type.split(/_(.+)/)[1];
-    var parent = file_type.split(/_(.+)/)[0];
-    mod = mod
-      .replace(/\./g, "_")
-      .replace(/[^\w ]+/g, "")
-      .trim()
-      .replace(/ /g, "_");
+    file_type = file.type.trim().replace(/[\.#$[\] ]+/g, "_");
 
-    file_type = parent + "/" + mod;
     var storageRef = firebase.storage().ref(file_type + "/" + file_name);
     var uploadTask = storageRef.put(file);
 
@@ -69,17 +58,9 @@ function getMeta() {
   storageRef
     .getMetadata()
     .then((metadata) => {
-      var mod = file_type.split(/(/)/)[1];
-      var parent = file_type.split(/(/.+)/)[0];
-      mod = mod
-        .replace(/\./g, "_")
-        .replace(/[^\w ]+/g, "")
-        .trim()
-        .replace(/ /g, "_");
+      file_type = file_type.trim().replace(/[\.#$[\] ]+/g, "_");
 
-      file_type = parent + "/" + mod;
-      // tags = filterTags(tags);
-      // getDesc();
+      getDesc();
       writeUserData(user, file_type, file_name, tags, desc);
     })
     .catch((error) => {
@@ -194,7 +175,7 @@ function filterTags(tags) {
 
 function getDesc() {
   var descInput = document.getElementById("descInput");
-  autosize(document.getElementById("descInput"));
+  // autosize(document.getElementById("descInput"));
   let temp = descInput.value;
   if (temp.length > 0) {
     desc = temp;
