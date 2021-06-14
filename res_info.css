@@ -1,0 +1,11 @@
+.res_info_file {
+  background-color: black;
+  max-height: 1193px;
+  max-width: 850px;
+  margin: 50px auto;
+  color: blanchedalmond;
+}
+
+#pdf-js-viewer {
+  background-color: brown;
+}

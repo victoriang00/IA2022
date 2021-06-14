@@ -10,6 +10,7 @@ var tags = [];
 var user = [];
 var desc = "";
 
+document.title = file_name.replace(/_\++/g, " ");
 getStorage(parentPath);
 getDB(fullPath);
 
@@ -29,6 +30,21 @@ function getStorage(parentPath) {
         if (itemRef.name == file_name) {
           console.log("you're amazing sis");
           console.log(file_name);
+          itemRef
+            .updateMetadata({ contentDisposition: "inline" })
+            .then(function () {
+              itemRef
+                .getDownloadURL()
+                .then(function (url) {
+                  var iframe1 = document.getElementById("pdf-js-viewer");
+
+                  iframe1.src = url;
+                  console.log(url);
+                })
+                .catch(function (error) {
+                  console.log("Error getting DownloadUrl: " + error);
+                });
+            });
         }
       });
     })
