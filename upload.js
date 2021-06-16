@@ -7,8 +7,7 @@ var file_type = "default_type";
 var tags = [];
 var desc = "";
 checkAuthState();
-var allTags = [];
-getTags();
+var allTags = getTags();
 
 function checkAuthState() {
   firebase.auth().onAuthStateChanged((u) => {
@@ -137,10 +136,7 @@ function setTags(tags) {
     .get()
     .then((snapshot) => {
       if (snapshot.exists()) {
-        var temptags = snapshot.val().tags;
-        temptags.forEach((tags) => {
-          allTags.push(tags.text);
-        });
+        var allTags = snapshot.val().tags;
         var toAdd = [];
         tags.forEach((vari) => {
           console.log(vari.text);
@@ -149,11 +145,16 @@ function setTags(tags) {
           }
         });
         allTags = allTags.concat(toAdd);
+        console.log(allTags);
         firebase.database().ref("allTags").set({ tags: allTags });
         return allTags;
       } else {
-        firebase.database().ref("allTags").set({ tags: tags });
-        return tags;
+        var toAdd = [];
+        tags.forEach((tags) => {
+          toAdd.push(tags.text);
+        });
+        firebase.database().ref("allTags").set({ tags: toAdd });
+        return toAdd;
       }
     })
     .catch((error) => {
