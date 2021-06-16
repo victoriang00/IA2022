@@ -3,9 +3,36 @@
   max-height: 1193px;
   max-width: 850px;
   margin: 50px auto;
-  color: blanchedalmond;
+  color: d5d0b5;
 }
 
 #pdf-js-viewer {
-  background-color: brown;
+  background-color: d5d0b5;
+}
+
+@media screen and (max-width: 1300px) {
+  .res_info_file {
+    max-width: 850px;
+  }
+  #pdf-js-viewer {
+    width: 850px;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .res_info_file {
+    max-width: 600px;
+  }
+  #pdf-js-viewer {
+    width: 600px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .res_info_file {
+    max-width: 400px;
+  }
+  #pdf-js-viewer {
+    width: 400px;
+  }
 }

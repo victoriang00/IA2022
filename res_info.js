@@ -22,14 +22,10 @@ function getStorage(parentPath) {
     .then((res) => {
       res.prefixes.forEach((folderRef) => {
         // All the prefixes under listRef.
-        // You may call listAll() recursively on them.
       });
       res.items.forEach((itemRef) => {
         // All the items under listRef.
-        console.log(itemRef);
         if (itemRef.name == file_name) {
-          console.log("you're amazing sis");
-          console.log(file_name);
           itemRef
             .updateMetadata({ contentDisposition: "inline" })
             .then(function () {
@@ -37,9 +33,7 @@ function getStorage(parentPath) {
                 .getDownloadURL()
                 .then(function (url) {
                   var iframe1 = document.getElementById("pdf-js-viewer");
-
                   iframe1.src = url;
-                  console.log(url);
                 })
                 .catch(function (error) {
                   console.log("Error getting DownloadUrl: " + error);

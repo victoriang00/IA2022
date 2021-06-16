@@ -7,6 +7,8 @@ var file_type = "default_type";
 var tags = [];
 var desc = "";
 checkAuthState();
+var allTags = [];
+getTags();
 
 function checkAuthState() {
   firebase.auth().onAuthStateChanged((u) => {
@@ -59,7 +61,6 @@ function getMeta() {
     .getMetadata()
     .then((metadata) => {
       file_type = file_type.trim().replace(/[\.#$[\] ]+/g, "_");
-
       getDesc();
       writeUserData(user, file_type, file_name, tags, desc);
     })
@@ -70,22 +71,94 @@ function getMeta() {
     });
 }
 
+function datalist(allTags) {
+  console.log(allTags);
+  var list = document.getElementById("allTags");
+
+  allTags.forEach(function (item) {
+    var option = document.createElement("option");
+    option.value = item;
+    list.appendChild(option);
+  });
+  var div = document.getElementById("descInput");
+  div.list = "allTags";
+}
+
 // Write in Realtime Database
 function writeUserData(user, file_type, file_name, tags, descIn) {
   firebase
     .database()
     .ref(file_type + "/" + file_name)
-    .set({
-      file_type: file_type,
-      file_name: file_name,
-      user: user,
-      desc: descIn,
-      tags: tags,
+    .set(
+      {
+        file_type: file_type,
+        file_name: file_name,
+        user: user,
+        desc: descIn,
+        tags: tags,
+      },
+      (error) => {
+        if (error) {
+          console.log("Error uploading details to database");
+        } else {
+          console.log("Details successfully uploaded to the database");
+          allTags = setTags(tags);
+          descInput.value = "";
+          desc = "";
+          tags = [];
+        }
+      }
+    );
+}
+
+function getTags() {
+  const dbRef = firebase.database().ref("allTags");
+  var allT = [];
+  dbRef
+    .get()
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        var temptags = snapshot.val().tags;
+        datalist(temptags);
+        alltags = temptags;
+        return allT;
+      } else {
+        return allT;
+      }
+    })
+    .catch((error) => {
+      console.error("Error getting all tags " + error);
     });
-  descInput.value = "";
-  desc = "";
-  tags = [];
-  console.log("Details upload to database completed successfully");
+}
+
+function setTags(tags) {
+  const dbRef = firebase.database().ref("allTags");
+  dbRef
+    .get()
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        var temptags = snapshot.val().tags;
+        temptags.forEach((tags) => {
+          allTags.push(tags.text);
+        });
+        var toAdd = [];
+        tags.forEach((vari) => {
+          console.log(vari.text);
+          if (!allTags.includes(vari.text)) {
+            toAdd.push(vari.text);
+          }
+        });
+        allTags = allTags.concat(toAdd);
+        firebase.database().ref("allTags").set({ tags: allTags });
+        return allTags;
+      } else {
+        firebase.database().ref("allTags").set({ tags: tags });
+        return tags;
+      }
+    })
+    .catch((error) => {
+      console.error("Error getting all tags " + error);
+    });
 }
 
 //Tags related things
@@ -101,7 +174,7 @@ function filterTags(tags) {
 
 [].forEach.call(document.getElementsByClassName("tags-input"), (el) => {
   let hiddenInput = document.createElement("input"),
-    mainInput = document.createElement("input");
+    mainInput = document.getElementById("tagsInput");
 
   hiddenInput.setAttribute("type", "hidden");
   hiddenInput.setAttribute("name", el.getAttribute("data-name"));
@@ -175,7 +248,6 @@ function filterTags(tags) {
 
 function getDesc() {
   var descInput = document.getElementById("descInput");
-  // autosize(document.getElementById("descInput"));
   let temp = descInput.value;
   if (temp.length > 0) {
     desc = temp;

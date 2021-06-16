@@ -40,13 +40,13 @@ function addInput(div, div2, div3) {
 }
 
 function getTN(itemRef, div2) {
+  // div2 refers to the second
   var storageRef = itemRef;
-  console.log("this is the storage ref ");
-  console.log(storageRef.parent.fullPath);
   if (storageRef.parent.fullPath.includes("image")) {
     storageRef
       .getDownloadURL()
       .then((url) => {
+        // get the download url of the file
         hiddenTN(url, div2);
       })
 
@@ -85,16 +85,13 @@ function getAll(path) {
   listRef
     .listAll()
     .then((res) => {
+      // get all paths
       res.prefixes.forEach((folderRef) => {
-        // console.log("These are the folders: ");
-        // console.log(folderRef);
         folderRef = folderRef;
         getAll(folderRef);
       });
+      //get all items in paths
       res.items.forEach((itemRef) => {
-        console.log("These are the items: ");
-        console.log(itemRef);
-        console.log(itemRef.fullPath);
         var name = itemRef.name;
         var link = hiddenLink(name, itemRef.fullPath);
         getTN(itemRef, link);
@@ -106,30 +103,6 @@ function getAll(path) {
     });
 }
 
-// function getDB(ref) {
-//   var fileRef = ref;
-
-//   fileRef.on(
-//     "value",
-//     (snapshot) => {
-//       var data = snapshot.val();
-
-//       console.log("Logged Data: ");
-//       var obs = data.jpeg;
-//       console.log(obs);
-//       Object.values(obs).forEach((item) => {
-//         console.log(item);
-//         var name = item.file_name;
-//         var type = item.file_type;
-//         var itemRef = firebase.storage().ref(type + "/" + name);
-//         getAll(itemRef);
-//       });
-//     },
-//     function (error) {
-//       console.error("Error filtering resources " + error);
-//     }
-//   );
-// }
 function filterAll(tags) {
   //Find all the prefixes and items.
   var fileRef = firebase.database().ref();
