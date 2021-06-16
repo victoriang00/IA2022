@@ -70,9 +70,6 @@
           <li class="navbar__item">
             <a href="/home.html" class="navbar__links"> Home </a>
           </li>
-          <!-- <li class="navbar__item">
-            <a href="/profile.html" class="navbar__links"> Profile </a>
-          </li> -->
           <li class="navbar__item">
             <a href="/upload.html" class="navbar__links"> Upload </a>
           </li>
@@ -80,13 +77,14 @@
             <button class="button" id="signInB" onclick="signIn();">Sign In</button>
             <script src="signin.js"></script>
           </li>
-          <li>
+          <li class="navbar__btn">
             <a class="button" href="#" onclick="signOut();">Sign out</a>
             <script src="signin.js"></script>
           </li>
         </ul>
       </div>
     </nav>
+    <script src="navbar.js"></script>
 
     <!-- Home Section -->
     <div class="home">
@@ -126,13 +124,5 @@
         </div>
       </div>
     </div>
-    <!-- <script>
-      firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-          alert("you are already signed in");
-        }
-      });
-      // window.location.href = "signin.html";
-    </script> -->
   </body>
 </html>

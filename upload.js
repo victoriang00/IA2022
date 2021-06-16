@@ -27,7 +27,6 @@ document.querySelector(".myFile").addEventListener("change", (e) => {
   file = e.target.files[0];
   console.log("File details: ");
   console.log(file);
-  checkAuthState();
 });
 
 document.getElementById("uploadB").addEventListener("click", () => {
@@ -102,9 +101,6 @@ function writeUserData(user, file_type, file_name, tags, descIn) {
         } else {
           console.log("Details successfully uploaded to the database");
           allTags = setTags(tags);
-          descInput.value = "";
-          desc = "";
-          tags = [];
         }
       }
     );
@@ -138,12 +134,31 @@ function setTags(tags) {
       if (snapshot.exists()) {
         var allTags = snapshot.val().tags;
         var toAdd = [];
-        tags.forEach((vari) => {
-          console.log(vari.text);
-          if (!allTags.includes(vari.text)) {
-            toAdd.push(vari.text);
+        tags.forEach(
+          (vari) => {
+            console.log(vari.text);
+            if (!allTags.includes(vari.text)) {
+              toAdd.push(vari.text);
+            }
+          },
+          (error) => {
+            if (error) {
+              console.log("Error: Unable to push tags to the database");
+              alert(
+                "There was an error uploading the tags to the database. Please try again."
+              );
+            } else {
+              alert("Successfully uploaded resource.");
+              descInput.value = "";
+              desc = "";
+              tags = [];
+              var tags = document.getElementsByClassName("tag");
+              while (tags[0]) {
+                tags[0].remove();
+              }
+            }
           }
-        });
+        );
         allTags = allTags.concat(toAdd);
         console.log(allTags);
         firebase.database().ref("allTags").set({ tags: allTags });
@@ -153,7 +168,27 @@ function setTags(tags) {
         tags.forEach((tags) => {
           toAdd.push(tags.text);
         });
-        firebase.database().ref("allTags").set({ tags: toAdd });
+        firebase
+          .database()
+          .ref("allTags")
+          .set({ tags: toAdd }, (error) => {
+            if (error) {
+              console.log("Error: Unable to push tags to the database");
+              alert(
+                "There was an error uploading the tags to the database. Please try again."
+              );
+            } else {
+              alert("Successfully uploaded resource.");
+              descInput.value = "";
+              desc = "";
+              tags = [];
+              var tags = document.getElementsByClassName("tag");
+              while (tags[0]) {
+                tags[0].remove();
+              }
+            }
+          });
+
         return toAdd;
       }
     })
@@ -196,7 +231,7 @@ function filterTags(tags) {
   });
   // make the delete thing work again
   mainInput.addEventListener("keydown", (e) => {
-    let keyCode = e || e.keyCode;
+    let keyCode = e.which || e.keyCode;
     if (keyCode == 8 && mainInput.value.length === 0 && tags.length > 0) {
       removeTag(tags.length - 1);
     }

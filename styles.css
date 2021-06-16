@@ -26,21 +26,20 @@
   justify-content: center;
   align-items: center;
   font-size: 1.2rem;
-  position: relative;
+  position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 999;
 }
 
 .navbar__container {
   display: flex;
   justify-content: space-between;
-  height: 50%;
+  height: 80px;
   z-index: 1;
   width: 100%;
   max-width: 1300px;
   margin: 0 auto;
   padding: 0 50px;
-  position: rel;
 }
 
 #navbar__logo {
@@ -54,10 +53,6 @@
   text-decoration: none;
   font-size: 2rem;
   font-weight: bold;
-}
-
-.fa-gem {
-  margin-right: 0.5rem;
 }
 
 .navbar__menu {
@@ -128,6 +123,7 @@
     max-width: 1300px;
     padding: 0;
   }
+
   .navbar__menu {
     display: grid;
     grid-template-columns: auto;
@@ -139,24 +135,25 @@
     opacity: 0;
     /*transition down speed*/
     transition: all 0.5s ease;
-    height: 5-vh;
+    height: 10-vh;
+    top: 150px;
     z-index: -1;
-    background: #d5d0b5;
   }
 
   /* when the ham bar is pressed*/
   .navbar__menu.active {
     /* show the entire menu */
+    background: #d8cc89;
     top: 160px;
     opacity: 1;
     transition: all 0.5s ease;
-    z-index: 100;
-    height: 48vh;
+    z-index: 99;
+    height: 50vh;
     font-size: 1.6rem;
   }
 
   #navbar__logo {
-    padding: 25px;
+    padding-left: 25px;
   }
 
   .navbar__toggle .bar {
@@ -346,12 +343,12 @@
 }
 
 .file__name {
-  color: #ff4a3a;
+  color: blue;
   text-align: justify;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* number of lines to show */
+  -webkit-line-clamp: 1; /* number of lines to show */
   -webkit-box-orient: vertical;
   margin: 5px;
 }

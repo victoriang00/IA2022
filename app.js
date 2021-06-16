@@ -1,85 +1,13 @@
 var database = firebase.database();
 var listRef = firebase.storage().ref();
+var file_name = "default_name";
+var file_desc = "default_desc";
 
 //Make all the initial files show up
-getAll(listRef);
+getAllStorage(listRef);
 
-function hiddenInfo(url, name) {
-  var hiddenInfo = document.createElement("div");
-  hiddenInfo.setAttribute("class", "hiddenInfo");
-  hiddenInfo.setAttribute("file_url", url);
-  hiddenInfo.setAttribute("file_name", name);
-  return hiddenInfo;
-}
-
-// Create div for the thumbnail and set the image to the thumbnail
-function hiddenTN(url, div2) {
-  var hiddenTN = document.createElement("img");
-  hiddenTN.setAttribute("class", "main__img__container");
-  if (url != "no") {
-    hiddenTN.setAttribute("src", url);
-  }
-
-  var name = div2.innerHTML;
-  var hInfo = hiddenInfo(url, name);
-
-  addInput(div2, hiddenTN, hInfo);
-}
-
-// Append div1 and div2 to the outer div, hiddenInput
-function addInput(div, div2, div3) {
-  var hiddenInput = document.createElement("div");
-
-  hiddenInput.appendChild(div);
-  hiddenInput.appendChild(div2);
-  hiddenInput.appendChild(div3);
-
-  document.getElementById("main__container").appendChild(hiddenInput);
-  hiddenInput.setAttribute("type", "visible");
-  hiddenInput.setAttribute("class", "hiddenDivs");
-}
-
-function getTN(itemRef, div2) {
-  // div2 refers to the second
-  var storageRef = itemRef;
-  if (storageRef.parent.fullPath.includes("image")) {
-    storageRef
-      .getDownloadURL()
-      .then((url) => {
-        // get the download url of the file
-        hiddenTN(url, div2);
-      })
-
-      .catch((error) => {
-        console.log("Error: Error getting URL " + error);
-      });
-    // hiddenTN()
-  } else {
-    hiddenTN("no", div2);
-  }
-}
-
-function hiddenLink(name, path) {
-  var hiddenLink = document.createElement("a");
-  hiddenLink.setAttribute("class", "hidden_name");
-  hiddenLink.textContent = name;
-
-  hiddenLink.setAttribute("href", "res_info.html#" + path);
-  hiddenLink.setAttribute("file_name", name);
-  // constants.file_name = name;
-
-  return hiddenLink;
-}
-
-function listPrefixes(pList) {
-  var newList = [];
-  for (var x = 0; x < pList.length; x++) {
-    newList.push(pList[x].name);
-  }
-  return newList;
-}
-
-function getAll(path) {
+function getAllStorage(path) {
+  console.log("get all function");
   //Find all the prefixes and items.
   listRef = path;
   listRef
@@ -88,13 +16,13 @@ function getAll(path) {
       // get all paths
       res.prefixes.forEach((folderRef) => {
         folderRef = folderRef;
-        getAll(folderRef);
+        getAllStorage(folderRef);
       });
       //get all items in paths
       res.items.forEach((itemRef) => {
-        var name = itemRef.name;
-        var link = hiddenLink(name, itemRef.fullPath);
-        getTN(itemRef, link);
+        file_name = itemRef.name;
+        var linkDiv = setHiddenLink(file_name, itemRef.fullPath);
+        getTN(itemRef, linkDiv);
       });
     })
     .catch((error) => {
@@ -103,41 +31,9 @@ function getAll(path) {
     });
 }
 
-function filterAll(tags) {
-  //Find all the prefixes and items.
-  var fileRef = firebase.database().ref();
-  var image = tags.map((e) => e.toLocaleLowerCase()).includes("image");
-
-  var pdf = tags.map((e) => e.toLocaleLowerCase()).includes("pdf");
-  var audio = tags.map((e) => e.toLocaleLowerCase()).includes("audio");
-
-  if (image) {
-    fileRef = firebase.storage().ref("image");
-    getAll(fileRef);
-  }
-  if (pdf) {
-    fileRef = firebase.storage().ref("application/pdf");
-    getAll(fileRef);
-  }
-  if (audio) {
-    fileRef = firebase.storage().ref("audio");
-    getAll(fileRef);
-  }
-}
-
-// TAGS RELATED THINGS
-var tags = [];
-
-function filterTags(tags) {
-  var filteredTags = [];
-  for (var i = 0; i < tags.length; i++) {
-    filteredTags.push(tags[i].text);
-  }
-  console.log(filteredTags);
-  return filteredTags;
-}
-
 [].forEach.call(document.getElementsByClassName("home__search"), (el) => {
+  console.log("create hidden inputs ");
+  //Create hidden elements
   let hiddenInput = document.createElement("input"),
     mainInput = document.getElementById("tags-search");
 
@@ -157,15 +53,16 @@ function filterTags(tags) {
       }
     });
   });
-  // make the delete thing work again
+  // Allow tags to be deleted when the delete button is pressed
   mainInput.addEventListener("keydown", (e) => {
-    let keyCode = e || e.keyCode;
+    let keyCode = e.which || e.keyCode;
     if (keyCode == 8 && mainInput.value.length === 0 && tags.length > 0) {
       removeTag(tags.length - 1);
       console.log(tags);
     }
   });
 
+  // Append the tags to the main screen
   el.appendChild(hiddenInput);
 
   function addTag(text) {
@@ -211,6 +108,141 @@ function filterTags(tags) {
     hiddenInput.value = tagsList.join(",");
   }
 });
+
+function setHiddenLink(file_name, path) {
+  console.log("set hidden link");
+  var hiddenLink = document.createElement("a");
+  hiddenLink.setAttribute("class", "file__name");
+  hiddenLink.textContent = file_name;
+
+  hiddenLink.setAttribute("href", "res_info.html#" + path);
+  hiddenLink.setAttribute("file_name", file_name);
+  return hiddenLink;
+}
+
+function getTN(itemRef, linkDiv) {
+  console.log("get tn");
+  // div2 refers to the second
+  var storageRef = itemRef;
+  if (storageRef.parent.fullPath.includes("image")) {
+    storageRef
+      .getDownloadURL()
+      .then((url) => {
+        // get the download url of the file
+        var TNDiv = setHiddenTN(url);
+        var HIdiv = setHIDiv(url, file_name);
+        getDesc(itemRef, linkDiv, TNDiv, HIdiv);
+      })
+      .catch((error) => {
+        console.log("Error: Error getting URL " + error);
+      });
+    // hiddenTN()
+  } else {
+    setHiddenTN("no");
+  }
+}
+
+function getDesc(itemRef, linkDiv, TNDiv, HIdiv) {
+  console.log("get description");
+  console.log(itemRef.fullPath);
+  var descRef = firebase.database().ref(itemRef.fullPath);
+  descRef.on("value", (snapshot) => {
+    const data = snapshot.val();
+    console.log(data.desc);
+    file_desc = data.desc;
+
+    var descDiv = setHiddenDesc(file_desc);
+
+    addInput(linkDiv, TNDiv, descDiv, HIdiv);
+  });
+}
+
+function setHiddenDesc(desc) {
+  console.log("set description");
+  var hiddenDesc = document.createElement("p");
+  hiddenDesc.setAttribute("class", "file__desc");
+  hiddenDesc.innerText = desc;
+  return hiddenDesc;
+}
+
+function setHiddenTN(url) {
+  console.log("set hidden tn");
+  var hiddenTN = document.createElement("img");
+  hiddenTN.setAttribute("class", "main__img__container");
+  if (url != "no") {
+    hiddenTN.setAttribute("src", url);
+  }
+
+  return hiddenTN;
+}
+
+function setHIDiv(url, name) {
+  console.log("append HI div");
+  var hiddenInfo = document.createElement("div");
+  hiddenInfo.setAttribute("class", "hiddenInfo");
+  hiddenInfo.setAttribute("file_url", url);
+  hiddenInfo.setAttribute("file_name", name);
+  return hiddenInfo;
+}
+
+// Append div1 and div2 to the outer div, hiddenInput
+function addInput(linkDiv, hiddenTN, descDiv, HIdiv) {
+  console.log("add input to screen");
+  var hiddenInput = document.createElement("div");
+
+  hiddenInput.appendChild(linkDiv);
+  hiddenInput.appendChild(hiddenTN);
+  hiddenInput.appendChild(descDiv);
+  hiddenInput.appendChild(HIdiv);
+
+  document.getElementById("main__container").appendChild(hiddenInput);
+  hiddenInput.setAttribute("type", "visible");
+  hiddenInput.setAttribute("class", "hiddenDivs");
+}
+
+function listPrefixes(pList) {
+  var newList = [];
+  for (var x = 0; x < pList.length; x++) {
+    newList.push(pList[x].name);
+  }
+  return newList;
+}
+
+function filterAll(tags) {
+  console.log("filter all resources");
+  //Find all the prefixes and items.
+  var fileRef = firebase.database().ref();
+  var image = tags.map((e) => e.toLocaleLowerCase()).includes("image");
+
+  var pdf = tags.map((e) => e.toLocaleLowerCase()).includes("pdf");
+  var audio = tags.map((e) => e.toLocaleLowerCase()).includes("audio");
+
+  if (image) {
+    fileRef = firebase.storage().ref("image");
+    getAllStorage(fileRef);
+  }
+  if (pdf) {
+    fileRef = firebase.storage().ref("application/pdf");
+    getAllStorage(fileRef);
+  }
+  if (audio) {
+    fileRef = firebase.storage().ref("audio");
+    getAllStorage(fileRef);
+  }
+}
+
+// TAGS RELATED THINGS
+var tags = [];
+
+function filterTags(tags) {
+  console.log("filter all tags");
+  var filteredTags = [];
+  for (var i = 0; i < tags.length; i++) {
+    filteredTags.push(tags[i].text);
+  }
+  console.log(filteredTags);
+  return filteredTags;
+}
 
 // Search button
 document.getElementById("search__btn").addEventListener("click", () => {
