@@ -143,19 +143,25 @@ function getTN(itemRef, linkDiv) {
 }
 
 function getDesc(itemRef, linkDiv, TNDiv, HIdiv) {
-  console.log("get description");
-  console.log(itemRef.fullPath);
-  var descRef = firebase.database().ref(itemRef.fullPath);
-  descRef.on("value", (snapshot) => {
-    const data = snapshot.val();
-    console.log(data.desc);
-    file_desc = data.desc;
+  const dbRef = firebase.database().ref(itemRef.fullPath);
+  dbRef
+    .get()
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        console.log("getDesc");
+        console.log(data.desc);
+        file_desc = data.desc;
+        var descDiv = setHiddenDesc(file_desc);
 
-    console.log("about to set hidden desc");
-    var descDiv = setHiddenDesc(file_desc);
-    console.log("about to add input to screen");
-    addInput(linkDiv, TNDiv, descDiv, HIdiv);
-  });
+        addInput(linkDiv, TNDiv, descDiv, HIdiv);
+      } else {
+        console.log("No data available");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 }
 
 function setHiddenDesc(desc) {
@@ -249,6 +255,11 @@ function filterTags(tags) {
 document.getElementById("search__btn").addEventListener("click", () => {
   var filteredTags = filterTags(tags);
 
-  document.querySelectorAll(".hiddenDivs").forEach((e) => e.remove());
-  filterAll(filteredTags);
+  if (filteredTags.length == 0) {
+    console.log("dis bitch empty");
+    alert("please input a tag to filter");
+  } else {
+    document.querySelectorAll(".hiddenDivs").forEach((e) => e.remove());
+    filterAll(filteredTags);
+  }
 });

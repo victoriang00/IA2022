@@ -18,7 +18,7 @@
 }
 /* Navbar  */
 .navbar {
-  background-image: url(images/mountain.jpg);
+  background-image: url(images/green.png);
   height: 250px;
   background-position: center;
   background-size: cover;
@@ -43,7 +43,7 @@
 }
 
 #navbar__logo {
-  background-color: #395373;
+  color: #fff;
   background-size: 100%;
   -webkit-background-clip: text;
 
@@ -64,7 +64,8 @@
 }
 
 .navbar__item {
-  height: 80px;
+  height: 38px;
+  font-size: 1rem;
 }
 
 .navbar__links {
@@ -102,11 +103,15 @@
 
 .button:hover {
   color: #395373;
+  background-color: #dce4d5;
+  border-radius: 7px;
   transition: all 0.3s ease;
 }
 
 .navbar__links:hover {
   color: #395373;
+  background-color: #dce4d5;
+  border-radius: 7px;
   transition: all 0.3s ease;
 }
 
@@ -132,18 +137,17 @@
     position: absolute;
     /* ensures that it cannot be seen when it goes up. */
     top: -1000px;
-    opacity: 0;
+    opacity: 1;
     /*transition down speed*/
     transition: all 0.5s ease;
-    height: 10-vh;
-    top: 150px;
+    height: 50vh;
     z-index: -1;
   }
 
   /* when the ham bar is pressed*/
   .navbar__menu.active {
     /* show the entire menu */
-    background: #d5d0b5;
+    background: #c6cea8;
     top: 160px;
     opacity: 1;
     transition: all 0.5s ease;
@@ -166,11 +170,12 @@
 
   .navbar__item {
     width: 100%;
+    padding: 1rem;
   }
 
   .navbar__links {
     text-align: center;
-    padding: 2rem;
+    padding: 1rem;
     width: 100%;
     display: table;
   }
@@ -183,15 +188,16 @@
   }
 
   .navbar__btn {
-    padding-bottom: 2rem;
+    width: 100%;
+    padding: 1rem;
   }
 
   .button {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 80%;
-    height: 80px;
+    width: 60%;
+    height: 40px;
     margin: 0;
   }
 
@@ -224,7 +230,7 @@
   font-size: 1.2rem;
   position: relative;
   top: 0;
-  z-index: 100;
+  z-index: 150;
 }
 .home__search {
   display: inline-block;
@@ -303,7 +309,7 @@
   margin: 0 auto;
   height: auto;
   background-color: #fff;
-  z-index: -1;
+  z-index: 150;
   width: 100%;
   max-width: 1300px;
 
@@ -328,7 +334,7 @@
   -webkit-line-clamp: 3; /* number of lines to show */
   -webkit-box-orient: vertical;
   margin: 0px 10px;
-  color: green;
+  color: #395373;
 }
 
 .main__img__container {
