@@ -126,44 +126,56 @@ function getTags() {
     });
 }
 
+function resetPage() {
+  var descInput = document.getElementById("descInput");
+  var hiddenInput = document.getElementById("hiddenInput");
+  hiddenInput.value = "";
+  descInput.value = "";
+  desc = "";
+  tags = [];
+  var tagsDiv = document.getElementsByClassName("tag");
+  while (tagsDiv[0]) {
+    tagsDiv[0].remove();
+  }
+}
+
 function setTags(tags) {
   const dbRef = firebase.database().ref("allTags");
   dbRef
     .get()
     .then((snapshot) => {
       if (snapshot.exists()) {
+        //If there are existing tags already
         var allTags = snapshot.val().tags;
         var toAdd = [];
-        tags.forEach(
-          (vari) => {
-            console.log(vari.text);
-            if (!allTags.includes(vari.text)) {
-              toAdd.push(vari.text);
-            }
-          },
-          (error) => {
+        tags.forEach((vari) => {
+          console.log(vari.text);
+          if (!allTags.includes(vari.text)) {
+            toAdd.push(vari.text);
+          }
+        });
+        allTags = allTags.concat(toAdd);
+        firebase
+          .database()
+          .ref("allTags")
+          .set({ tags: allTags }, (error) => {
+            // If the function returns an error.
             if (error) {
               console.log("Error: Unable to push tags to the database");
               alert(
                 "There was an error uploading the tags to the database. Please try again."
               );
-            } else {
-              alert("Successfully uploaded resource.");
-              descInput.value = "";
-              desc = "";
-              tags = [];
-              var tags = document.getElementsByClassName("tag");
-              while (tags[0]) {
-                tags[0].remove();
-              }
             }
-          }
-        );
-        allTags = allTags.concat(toAdd);
-        console.log(allTags);
-        firebase.database().ref("allTags").set({ tags: allTags });
+            // If the upload function runs as normal
+            else {
+              alert("Successfully uploaded resource.");
+              resetPage();
+            }
+          });
         return allTags;
-      } else {
+      }
+      //If there aren't any existing tags
+      else {
         var toAdd = [];
         tags.forEach((tags) => {
           toAdd.push(tags.text);
@@ -172,20 +184,17 @@ function setTags(tags) {
           .database()
           .ref("allTags")
           .set({ tags: toAdd }, (error) => {
+            // If an error occurs when pushing the tags
             if (error) {
               console.log("Error: Unable to push tags to the database");
               alert(
                 "There was an error uploading the tags to the database. Please try again."
               );
-            } else {
+            }
+            // If pushing the tags runs successfully
+            else {
               alert("Successfully uploaded resource.");
-              descInput.value = "";
-              desc = "";
-              tags = [];
-              var tags = document.getElementsByClassName("tag");
-              while (tags[0]) {
-                tags[0].remove();
-              }
+              resetPage();
             }
           });
 
@@ -213,6 +222,7 @@ function filterTags(tags) {
     mainInput = document.getElementById("tagsInput");
 
   hiddenInput.setAttribute("type", "hidden");
+  hiddenInput.setAttribute("id", "hiddenInput");
   hiddenInput.setAttribute("name", el.getAttribute("data-name"));
 
   mainInput.setAttribute("type", "text");

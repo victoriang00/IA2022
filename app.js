@@ -38,7 +38,6 @@ function getAllStorage(path) {
     mainInput = document.getElementById("tags-search");
 
   hiddenInput.setAttribute("type", "hidden");
-
   hiddenInput.setAttribute("name", "data-name");
   hiddenInput.setAttribute("id", "tagDiv");
 
@@ -122,7 +121,7 @@ function setHiddenLink(file_name, path) {
 
 function getTN(itemRef, linkDiv) {
   console.log("get tn");
-  // div2 refers to the second
+
   var storageRef = itemRef;
   if (storageRef.parent.fullPath.includes("image")) {
     storageRef
@@ -136,9 +135,10 @@ function getTN(itemRef, linkDiv) {
       .catch((error) => {
         console.log("Error: Error getting URL " + error);
       });
-    // hiddenTN()
   } else {
-    setHiddenTN("no");
+    var TNDiv = setHiddenTN("no");
+    var HIdiv = setHIDiv("no", file_name);
+    getDesc(itemRef, linkDiv, TNDiv, HIdiv);
   }
 }
 
@@ -151,8 +151,9 @@ function getDesc(itemRef, linkDiv, TNDiv, HIdiv) {
     console.log(data.desc);
     file_desc = data.desc;
 
+    console.log("about to set hidden desc");
     var descDiv = setHiddenDesc(file_desc);
-
+    console.log("about to add input to screen");
     addInput(linkDiv, TNDiv, descDiv, HIdiv);
   });
 }
@@ -186,12 +187,12 @@ function setHIDiv(url, name) {
 }
 
 // Append div1 and div2 to the outer div, hiddenInput
-function addInput(linkDiv, hiddenTN, descDiv, HIdiv) {
+function addInput(linkDiv, TNDiv, descDiv, HIdiv) {
   console.log("add input to screen");
   var hiddenInput = document.createElement("div");
 
   hiddenInput.appendChild(linkDiv);
-  hiddenInput.appendChild(hiddenTN);
+  hiddenInput.appendChild(TNDiv);
   hiddenInput.appendChild(descDiv);
   hiddenInput.appendChild(HIdiv);
 
