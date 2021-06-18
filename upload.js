@@ -100,8 +100,9 @@ function writeUserData(user, file_type, file_name, tags, descIn) {
           console.log("Error uploading details to database");
         } else {
           console.log("Details successfully uploaded to the database");
-          //allTags = setTags(tags);
-          resourceMatch(tags, file_name);
+          allTags = setTags(tags);
+          var path = file_type + "/" + file_name;
+          resourceMatch(tags, path);
         }
       }
     );

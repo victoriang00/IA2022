@@ -17,6 +17,7 @@ function getAllStorage(path) {
       res.prefixes.forEach((folderRef) => {
         folderRef = folderRef;
         getAllStorage(folderRef);
+        console.log(folderRef);
       });
       //get all items in paths
       res.items.forEach((itemRef) => {
@@ -217,7 +218,63 @@ function filterAll(tags) {
 }
 
 function filterAllTags(tags) {
-  var fileRef = firebase.database().ref();
+  var fileRef = firebase.database().ref("allTags/match/matched");
+  fileRef.on("value", (snapshot) => {
+    const data = snapshot.val();
+
+    var keys = Object.keys(data);
+
+    keys.forEach((key) => {
+      if (tags.includes(key)) {
+        var values = data[key];
+        console.log(values);
+        values.forEach((value) => {
+          var itemRef = firebase.storage().ref(value);
+          console.log(itemRef.fullPath);
+          var fullpath = itemRef.fullPath;
+
+          var file_type = fullpath.substring(0, fullpath.lastIndexOf("/") + 1);
+          console.log(file_type);
+
+          var file_name = fullpath.substring(
+            fullpath.lastIndexOf("/") + 1,
+            fullpath.length
+          );
+          console.log(file_name);
+          var itemPath = firebase.storage().ref(file_type);
+          getSpecific(itemPath, file_name);
+        });
+      }
+    });
+  });
+}
+
+function getSpecific(path, name) {
+  //Find all the prefixes and items.
+  listRef = path;
+  listRef
+    .listAll()
+    .then((res) => {
+      // get all paths
+      res.prefixes.forEach((folderRef) => {
+        folderRef = folderRef;
+        getAllStorage(folderRef);
+      });
+      //get all items in paths
+      res.items.forEach((itemRef) => {
+        if (itemRef.name == name) {
+          file_name = itemRef.name;
+          var linkDiv = setHiddenLink(file_name, itemRef.fullPath);
+          getTN(itemRef, linkDiv);
+        } else {
+          console.log("none");
+        }
+      });
+    })
+    .catch((error) => {
+      // Uh-oh, an error occurred!
+      console.log("Error: Error getting all files." + error);
+    });
 }
 
 // TAGS RELATED THINGS
@@ -243,5 +300,6 @@ document.getElementById("search__btn").addEventListener("click", () => {
   } else {
     document.querySelectorAll(".hiddenDivs").forEach((e) => e.remove());
     filterAll(filteredTags);
+    filterAllTags(filteredTags);
   }
 });
