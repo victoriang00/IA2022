@@ -6,8 +6,8 @@ var file_desc = "default_desc";
 //Make all the initial files show up
 getAllStorage(listRef);
 
+//This function gets the paths for all the resources as well as the file's name. It also gets thd download
 function getAllStorage(path) {
-  console.log("get all function");
   //Find all the prefixes and items.
   listRef = path;
   listRef
@@ -32,7 +32,6 @@ function getAllStorage(path) {
 }
 
 [].forEach.call(document.getElementsByClassName("home__search"), (el) => {
-  console.log("create hidden inputs ");
   //Create hidden elements
   let hiddenInput = document.createElement("input"),
     mainInput = document.getElementById("tags-search");
@@ -109,7 +108,6 @@ function getAllStorage(path) {
 });
 
 function setHiddenLink(file_name, path) {
-  console.log("set hidden link");
   var hiddenLink = document.createElement("a");
   hiddenLink.setAttribute("class", "file__name");
   hiddenLink.textContent = file_name;
@@ -120,8 +118,6 @@ function setHiddenLink(file_name, path) {
 }
 
 function getTN(itemRef, linkDiv) {
-  console.log("get tn");
-
   var storageRef = itemRef;
   if (storageRef.parent.fullPath.includes("image")) {
     storageRef
@@ -129,32 +125,28 @@ function getTN(itemRef, linkDiv) {
       .then((url) => {
         // get the download url of the file
         var TNDiv = setHiddenTN(url);
-        var HIdiv = setHIDiv(url, file_name);
-        getDesc(itemRef, linkDiv, TNDiv, HIdiv);
+        getDesc(itemRef, linkDiv, TNDiv);
       })
       .catch((error) => {
         console.log("Error: Error getting URL " + error);
       });
   } else {
     var TNDiv = setHiddenTN("no");
-    var HIdiv = setHIDiv("no", file_name);
-    getDesc(itemRef, linkDiv, TNDiv, HIdiv);
+    getDesc(itemRef, linkDiv, TNDiv);
   }
 }
 
-function getDesc(itemRef, linkDiv, TNDiv, HIdiv) {
+function getDesc(itemRef, linkDiv, TNDiv) {
   const dbRef = firebase.database().ref(itemRef.fullPath);
   dbRef
     .get()
     .then((snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.val();
-        console.log("getDesc");
-        console.log(data.desc);
         file_desc = data.desc;
         var descDiv = setHiddenDesc(file_desc);
 
-        addInput(linkDiv, TNDiv, descDiv, HIdiv);
+        addInput(linkDiv, TNDiv, descDiv);
       } else {
         console.log("No data available");
       }
@@ -165,7 +157,6 @@ function getDesc(itemRef, linkDiv, TNDiv, HIdiv) {
 }
 
 function setHiddenDesc(desc) {
-  console.log("set description");
   var hiddenDesc = document.createElement("p");
   hiddenDesc.setAttribute("class", "file__desc");
   hiddenDesc.innerText = desc;
@@ -173,7 +164,6 @@ function setHiddenDesc(desc) {
 }
 
 function setHiddenTN(url) {
-  console.log("set hidden tn");
   var hiddenTN = document.createElement("img");
   hiddenTN.setAttribute("class", "main__img__container");
   if (url != "no") {
@@ -183,24 +173,13 @@ function setHiddenTN(url) {
   return hiddenTN;
 }
 
-function setHIDiv(url, name) {
-  console.log("append HI div");
-  var hiddenInfo = document.createElement("div");
-  hiddenInfo.setAttribute("class", "hiddenInfo");
-  hiddenInfo.setAttribute("file_url", url);
-  hiddenInfo.setAttribute("file_name", name);
-  return hiddenInfo;
-}
-
 // Append div1 and div2 to the outer div, hiddenInput
-function addInput(linkDiv, TNDiv, descDiv, HIdiv) {
-  console.log("add input to screen");
+function addInput(linkDiv, TNDiv, descDiv) {
   var hiddenInput = document.createElement("div");
 
   hiddenInput.appendChild(linkDiv);
   hiddenInput.appendChild(TNDiv);
   hiddenInput.appendChild(descDiv);
-  hiddenInput.appendChild(HIdiv);
 
   document.getElementById("main__container").appendChild(hiddenInput);
   hiddenInput.setAttribute("type", "visible");
@@ -216,11 +195,10 @@ function listPrefixes(pList) {
 }
 
 function filterAll(tags) {
-  console.log("filter all resources");
   //Find all the prefixes and items.
   var fileRef = firebase.database().ref();
-  var image = tags.map((e) => e.toLocaleLowerCase()).includes("image");
 
+  var image = tags.map((e) => e.toLocaleLowerCase()).includes("image");
   var pdf = tags.map((e) => e.toLocaleLowerCase()).includes("pdf");
   var audio = tags.map((e) => e.toLocaleLowerCase()).includes("audio");
 
@@ -236,6 +214,10 @@ function filterAll(tags) {
     fileRef = firebase.storage().ref("audio");
     getAllStorage(fileRef);
   }
+}
+
+function filterAllTags(tags) {
+  var fileRef = firebase.database().ref();
 }
 
 // TAGS RELATED THINGS

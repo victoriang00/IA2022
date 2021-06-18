@@ -100,7 +100,8 @@ function writeUserData(user, file_type, file_name, tags, descIn) {
           console.log("Error uploading details to database");
         } else {
           console.log("Details successfully uploaded to the database");
-          allTags = setTags(tags);
+          //allTags = setTags(tags);
+          resourceMatch(tags, file_name);
         }
       }
     );
@@ -184,6 +185,86 @@ function setTags(tags) {
           .database()
           .ref("allTags")
           .set({ tags: toAdd }, (error) => {
+            // If an error occurs when pushing the tags
+            if (error) {
+              console.log("Error: Unable to push tags to the database");
+              alert(
+                "There was an error uploading the tags to the database. Please try again."
+              );
+            }
+            // If pushing the tags runs successfully
+            else {
+              alert("Successfully uploaded resource.");
+              resetPage();
+            }
+          });
+
+        return toAdd;
+      }
+    })
+    .catch((error) => {
+      console.error("Error getting all tags " + error);
+    });
+}
+
+function resourceMatch(tags, file_name) {
+  const dbRef = firebase.database().ref("allTags/match");
+  dbRef
+    .get()
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        var allDicts = snapshot.val().matched;
+        var alltags = Object.keys(allDicts);
+
+        tags.forEach((vari) => {
+          if (alltags.includes(vari.text)) {
+            var temparr = allDicts[vari.text];
+            // add to temparr
+            if (!temparr.includes(file_name)) {
+              temparr.push(file_name);
+            }
+            // reset all dicts
+            allDicts[vari.text] = temparr;
+            //add file name to the thing
+          } else {
+            allDicts[vari.text] = [file_name];
+          }
+        });
+
+        firebase
+          .database()
+          .ref("allTags/match")
+          .set({ matched: allDicts }, (error) => {
+            // If the function returns an error.
+            if (error) {
+              console.log("Error: Unable to push tags to the database");
+              alert(
+                "There was an error uploading the tags to the database. Please try again."
+              );
+            }
+            // If the upload function runs as normal
+            else {
+              alert("Successfully uploaded resource.");
+              resetPage();
+            }
+          });
+        return toAdd;
+      }
+      //If there aren't any existing tags
+      else {
+        console.log("doesn't exist");
+        var toAdd = {};
+        tags.forEach((tags) => {
+          toAdd[tags.text] = [file_name];
+        });
+
+        console.log("toadd");
+        console.log(toAdd);
+
+        firebase
+          .database()
+          .ref("allTags/match")
+          .set({ matched: toAdd }, (error) => {
             // If an error occurs when pushing the tags
             if (error) {
               console.log("Error: Unable to push tags to the database");
