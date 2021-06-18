@@ -6,7 +6,6 @@ var file_desc = "default_desc";
 //Make all the initial files show up
 getAllStorage(listRef);
 
-//This function gets the paths for all the resources as well as the file's name. It also gets thd download
 function getAllStorage(path) {
   //Find all the prefixes and items.
   listRef = path;
@@ -140,20 +139,15 @@ function getTN(itemRef, linkDiv) {
 function getDesc(itemRef, linkDiv, TNDiv) {
   const dbRef = firebase.database().ref(itemRef.fullPath);
   dbRef
-    .get()
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        file_desc = data.desc;
-        var descDiv = setHiddenDesc(file_desc);
+    .on("value", (snapshot) => {
+      const data = snapshot.val();
+      file_desc = data.desc;
+      var descDiv = setHiddenDesc(file_desc);
 
-        addInput(linkDiv, TNDiv, descDiv);
-      } else {
-        console.log("No data available");
-      }
+      addInput(linkDiv, TNDiv, descDiv);
     })
     .catch((error) => {
-      console.error(error);
+      console.log("Error getting description: " + error);
     });
 }
 
